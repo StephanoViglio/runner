@@ -19,7 +19,8 @@
 |---|---|
 | Repositório configurado + CI/CD base | Pipeline rodando sem erros |
 | `assinador.jar` funcional | Todos os critérios de US-02 cobertos |
-| CLI `assinatura` funcional | Todos os critérios de US-01, US-03, US-04 cobertos |
+| CLI `assinatura` funcional | Todos os critérios de US-01 e US-04 cobertos |
+| CLI `simulador` funcional | Todos os critérios de US-03 e US-04 cobertos |
 | Suite de testes completa | Cobertura ≥ 70%, todos os critérios de aceitação passando |
 | Binários publicados e assinados | Release no GitHub com `.sig`, `.pem` e `SHA256SUMS` |
 | Documentação completa | Manual, docs técnicas e diagramas C4 publicados |
@@ -65,10 +66,16 @@ assinador/
 
 #### Interface de Linha de Comandos (CLI)
 
-A definir
+Possivelmente uso da linguagem Go para CLI de assinatura e simulador.
 
 ---
 
 ## Documentação
 
-A definir
+Diagrama C4.
+
+---
+
+## Pipeline CI/CD
+
+Uso de GitHub Actions para entrega continua da aplicação.
