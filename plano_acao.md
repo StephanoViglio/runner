@@ -14,7 +14,7 @@ O objetivo desta preparação não é escrever código de negócio, mas garantir
 
 ### Repositório e convenções
 
-- Definir estrutura do repositório (monorepo ou separado — confirmar com o professor)
+- Definir estrutura do repositório (cada aplicação em um diretório)
 - Configurar branches: `main` protegida, features em `feature/nome-da-feature`
 - Definir convenção de commits (ex: Conventional Commits)
 - Configurar o `.gitignore` para Go e Java
@@ -24,7 +24,7 @@ O objetivo desta preparação não é escrever código de negócio, mas garantir
 - Go instalado e configurado
 - Java + Maven instalados
 - Decidir o framework CLI em Go (ideia inicial: `cobra`)
-- Decidir o framework web Java para o modo servidor (recomendado: Spring Boot)
+- Decidir o framework web Java para o modo servidor (Spring Boot)
 
 ### Divisão inicial de responsabilidades
 
@@ -38,13 +38,7 @@ O objetivo desta preparação não é escrever código de negócio, mas garantir
 
 ## Iteração 1 — Esqueleto Funcional
 
-O objetivo é ter o fluxo básico ponta a ponta funcionando, mesmo que de forma simples. Sem provisionamento automático de JDK, sem PKCS#11 — apenas o caminho principal. Além disso, elaborar os diagramas C4.
-
-### Diagramas C4
-
-- Elaborar o Diagrama de Contexto (nível 1): atores, sistemas externos e o Sistema Runner como caixa única
-- Elaborar o Diagrama de Contêineres (nível 2): detalhar os dois CLIs, o `assinador.jar` e as comunicações entre eles
-- Os diagramas devem refletir as decisões arquiteturais tomadas nesta iteração e ser revisados nas iterações seguintes se necessário
+O objetivo é ter o fluxo básico ponta a ponta funcionando, mesmo que de forma simples. Sem provisionamento automático de JDK, sem PKCS#11 — apenas o caminho principal.
 
 ### `assinador.jar`
 
@@ -162,7 +156,7 @@ A última iteração foca em qualidade, entrega e documentação.
 | Iteração | Foco principal | Entregável |
 |----------|---------------|------------|
 | 0 | Setup | Repositório e ambiente configurados |
-| 1 | Esqueleto | Fluxo básico ponta a ponta funcionando + diagramas C4 |
+| 1 | Esqueleto | Fluxo básico ponta a ponta funcionando |
 | 2 | Validação dos Parâmetros | Parâmetros validados, erros tratados |
 | 3 | Simulador + JDK | CLIs autossuficientes |
 | 4 | CI/CD + docs | Binários publicados, projeto documentado |
