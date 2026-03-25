@@ -23,7 +23,7 @@
 | CLI `simulador` funcional | Todos os critérios de US-03 e US-04 cobertos |
 | Suite de testes completa | Cobertura ≥ 70%, todos os critérios de aceitação passando |
 | Binários publicados e assinados | Release no GitHub com `.sig`, `.pem` e `SHA256SUMS` |
-| Documentação completa | Manual, docs técnicas e diagramas C4 publicados |
+| Documentação completa | Manual, docs técnicas e Readme publicados |
 
 ---
 
