@@ -60,6 +60,12 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.7.7</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
