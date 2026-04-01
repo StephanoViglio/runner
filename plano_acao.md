@@ -15,7 +15,7 @@ O objetivo desta preparação não é escrever código de negócio, mas garantir
 ### Repositório e convenções
 
 - Definir estrutura do repositório (cada aplicação em um diretório)
-- Configurar branches: `main` protegida, features em `feature/nome-da-feature`
+- Configurar branches: `main` protegida, features em `feat/nome-da-feature`
 - Definir convenção de commits (ex: Conventional Commits)
 - Configurar o `.gitignore` para Go e Java
 
@@ -25,14 +25,6 @@ O objetivo desta preparação não é escrever código de negócio, mas garantir
 - Java + Maven instalados
 - Decidir o framework CLI em Go (ideia inicial: `cobra`)
 - Decidir o framework web Java para o modo servidor (Spring Boot)
-
-### Divisão inicial de responsabilidades
-
-| Pessoa | Foco principal |
-|--------|---------------|
-| Pessoa 1 | `assinador.jar` (Java) |
-| Pessoa 2 | CLIs em Go |
-| Ambos | Integração entre as partes |
 
 ---
 
