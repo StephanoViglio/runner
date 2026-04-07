@@ -82,7 +82,27 @@ Com o fluxo básico funcionando, o foco passa para a segunda parte do `assinador
 
 ---
 
-## Iteração 3 — Simulador CLI e Provisionamento de JDK
+## Iteração 3 - CI/CD e Binários
+
+Criação da automatização de entrega dos CLIs
+
+### CI/CD com GitHub Actions
+
+- Pipeline de CI: compilar + rodar testes a cada push
+- Pipeline de CD: ao criar uma tag `v*`, gerar os binários para as três plataformas e publicar no GitHub Releases
+- Incluir checksums SHA256 para cada binário
+
+### Binários gerados
+
+| Arquivo | Plataforma |
+|---------|-----------|
+| `assinatura-windows-amd64.exe` | Windows |
+| `assinatura-linux-amd64` | Linux |
+| `assinatura-darwin-amd64` | macOS |
+
+> O cross-compiling é nativo em Go — basta configurar `GOOS` e `GOARCH`.
+
+## Iteração 4 — Simulador CLI e Provisionamento de JDK
 
 Com o `assinador` estável, adiciona-se as outras duas peças de infraestrutura.
 
@@ -106,25 +126,9 @@ Com o `assinador` estável, adiciona-se as outras duas peças de infraestrutura.
 
 ---
 
-## Iteração 4 — CI/CD, Binários e Documentação
+## Iteração 5 — Documentação e Qualidade
 
-A última iteração foca em qualidade, entrega e documentação.
-
-### CI/CD com GitHub Actions
-
-- Pipeline de CI: compilar + rodar testes a cada push
-- Pipeline de CD: ao criar uma tag `v*`, gerar os binários para as três plataformas e publicar no GitHub Releases
-- Incluir checksums SHA256 para cada binário
-
-### Binários gerados
-
-| Arquivo | Plataforma |
-|---------|-----------|
-| `assinatura-windows-amd64.exe` | Windows |
-| `assinatura-linux-amd64` | Linux |
-| `assinatura-darwin-amd64` | macOS |
-
-> O cross-compiling é nativo em Go — basta configurar `GOOS` e `GOARCH`.
+A última iteração foca em documentação e qualidade.
 
 ### Documentação
 
@@ -139,8 +143,7 @@ A última iteração foca em qualidade, entrega e documentação.
 
 ### Resultado esperado
 
-> Projeto documentado, binários publicados no GitHub Releases e pipeline de CI/CD funcionando.
-
+> Projeto documentado e testes finais realizados.
 ---
 
 ## Resumo das Iterações
@@ -150,7 +153,8 @@ A última iteração foca em qualidade, entrega e documentação.
 | 0 | Setup | Repositório e ambiente configurados |
 | 1 | Esqueleto | Fluxo básico ponta a ponta funcionando |
 | 2 | Validação dos Parâmetros | Parâmetros validados, erros tratados |
-| 3 | Simulador + JDK | CLIs autossuficientes |
-| 4 | CI/CD + docs | Binários publicados, projeto documentado |
+| 3 | CI/CD | Binários publicados e pipeline funcionando |
+| 4 | Simulador + JDK | CLIs autossuficientes |
+| 5 | docs | projeto documentado |
 
 ---
