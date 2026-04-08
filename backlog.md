@@ -23,7 +23,26 @@
     E as proteções no repositório foram definidas
     Quando for iniciado o desenvolvimento do sistema
     Então as branches já estão configuradas e seguras
+
+3. Definir estrutura do repositório
+- Dado que o repositório foi criado
+    Quando organizamos os diretórios
+    Então cada aplicação (CLI e assinador) está separada corretamente
  
+4. Configurar .gitignore para Go e Java
+- Dado que o projeto possui múltiplas tecnologias
+    Quando o .gitignore é definido
+    Então arquivos desnecessários não são versionados
+
+5. Definir convenção de commits
+- Dado que a equipe realiza commits
+    Quando seguem o padrão definido (ex: Conventional Commits)
+    Então o histórico se mantém padronizado
+
+6. Definir frameworks iniciais
+- Dado que as decisões técnicas foram tomadas
+    Quando o desenvolvimento inicia
+    Então o CLI utiliza cobra e o backend utiliza Spring Boot 
 
 ## US-01 — Invocar assinador.jar via CLI
 
@@ -31,7 +50,7 @@
 **Quero** executar comandos de assinatura digital através da linha de comandos
 **Para que** eu possa invocar o `assinador.jar` sem conhecer detalhes de configuração Java, tanto para assinar quanto para validar
 
-### Tarefas
+### Tarefas (Iteração 1)
 
 1.  Configurar projeto Go e analisar biblioteca de CLI
    - Dado que o projeto Go foi criado
@@ -54,25 +73,6 @@
      Quando executo o comando
      Então o CLI apresenta mensagem de erro compreensível e encerra com exit code != 0
 
-4. Implementar validação sintática dos parâmetros no CLI
-   - Dado que omito um parâmetro obrigatório
-     Quando executo o CLI
-     Então recebo mensagem indicando o parâmetro ausente antes de invocar o `assinador.jar`
-   - Dado que forneço um parâmetro com formato inválido
-     Quando executo o CLI
-     Então recebo mensagem de erro clara sem que o `assinador.jar` seja invocado
-
-5. Implementar `--help` e padronizar saída
-   - Dado que sou um usuário no terminal
-     Quando executo `assinatura --help`, `assinatura criar --help` ou `assinatura validar --help`
-     Então vejo descrição do comando, parâmetros obrigatórios/opcionais e exemplos de uso
-   - Dado que a operação foi bem-sucedida
-     Quando o CLI imprime o resultado
-     Então a saída é legível e o exit code é zero
-   - Dado que houve falha
-     Quando o CLI finaliza
-     Então retorna exit code != 0 e mensagem útil
-
 ---
 
 ## US-02 — Simular Assinatura Digital com Validação de Parâmetros
@@ -81,7 +81,22 @@
 **Quero** que o Assinador valide rigorosamente os parâmetros de entrada antes de simular uma operação de assinatura digital
 **Para que** eu receba feedback imediato sobre erros de parâmetros, garantindo que apenas requisições bem formadas sejam processadas
 
-### Tarefas
+### Tarefas (Iteração 1)
+
+1. Criar projeto Maven do Assinador
+2. Definir interface SignatureService
+3. Implementar `FakeSignatureService` com respostas pré-construídas
+   - Dado que todos os parâmetros de criação são válidos
+     Quando o método `sign` é invocado
+     Então retorna uma assinatura digital simulada fixa e bem formada
+   - Dado que todos os parâmetros de validação são válidos
+     Quando o método `validate` é invocado
+     Então retorna resultado simulado fixo (sucesso ou falha) no formato esperado
+4. Implementar modo CLI no assinador.jar
+5. Implementar modo servidor com Spring Boot (endpoints /sign e /validate)
+6. Criar testes unitários iniciais
+
+### Tarefas (Iteração 2)
 
 1. Implementar validação de parâmetros para criação de assinatura
    - Dado que recebo parâmetros válidos para criação de assinatura
@@ -99,13 +114,13 @@
      Quando o Assinador os processa
      Então retorna mensagem de erro estruturada indicando qual parâmetro está incorreto e o motivo
 
-3. Implementar `FakeSignatureService` com respostas pré-construídas
-   - Dado que todos os parâmetros de criação são válidos
-     Quando o método `sign` é invocado
-     Então retorna uma assinatura digital simulada fixa e bem formada
-   - Dado que todos os parâmetros de validação são válidos
-     Quando o método `validate` é invocado
-     Então retorna resultado simulado fixo (sucesso ou falha) no formato esperado
+3. Implementar validação sintática dos parâmetros no CLI
+   - Dado que omito um parâmetro obrigatório
+     Quando executo o CLI
+     Então recebo mensagem indicando o parâmetro ausente antes de invocar o `assinador.jar`
+   - Dado que forneço um parâmetro com formato inválido
+     Quando executo o CLI
+     Então recebo mensagem de erro clara sem que o `assinador.jar` seja invocado
 
 4. Implementar suporte à interface PKCS#11 (simulado)
    - Dado que o Assinador recebe parâmetros que referenciam um dispositivo criptográfico
@@ -117,6 +132,22 @@
      Quando o Assinador responde
      Então a saída segue formato estruturado consistente tanto no modo CLI quanto no modo servidor
 
+6. Implementar `--help` e padronizar saída
+   - Dado que sou um usuário no terminal
+     Quando executo `assinatura --help`, `assinatura criar --help` ou `assinatura validar --help`
+     Então vejo descrição do comando, parâmetros obrigatórios/opcionais e exemplos de uso
+   - Dado que a operação foi bem-sucedida
+     Quando o CLI imprime o resultado
+     Então a saída é legível e o exit code é zero
+   - Dado que houve falha
+     Quando o CLI finaliza
+     Então retorna exit code != 0 e mensagem útil
+ 
+7. Criar testes de integração
+
+8. Integrar análise com SonarQube
+
+
 ---
 
 ## US-03 — Gerenciar Ciclo de Vida do Simulador do HubSaúde
@@ -125,7 +156,7 @@
 **Quero** iniciar, parar e monitorar o Simulador do HubSaúde (`simulador.jar`) através do CLI
 **Para que** eu possa gerenciar o ciclo de vida do Simulador sem conhecer os comandos Java subjacentes
 
-### Tarefas
+### Tarefas (Iteração 4)
 
 1. Implementar comando `start` do CLI simulador
    - Dado que o `simulador.jar` está disponível em `~/.hubsaude`
@@ -167,7 +198,7 @@
 **Quero** que o sistema baixe e configure automaticamente o JDK necessário quando este não estiver disponível
 **Para que** eu possa utilizar o Assinador e o Simulador sem precisar instalar ou configurar o Java manualmente
 
-### Tarefas
+### Tarefas (Iteração 4)
 
 1. Implementar detecção de JDK em `~/.hubsaude/jdk`
    - Dado que o JDK já está presente em `~/.hubsaude/jdk`
@@ -206,7 +237,7 @@
 **Quero** baixar uma versão pré-compilada do CLI para minha plataforma (Windows, Linux ou macOS)
 **Para que** eu possa utilizar o sistema imediatamente sem necessidade de compilação
 
-### Tarefas
+### Tarefas (Iteração 3)
 
 1. Configurar pipeline de CI com GitHub Actions
    - Dado que um push é feito em qualquer branch
@@ -228,6 +259,14 @@
      Quando a tag é criada
      Então segue o formato `vMAJOR.MINOR.PATCH` e o changelog da release é descritivo
 
+## Tarefas adicionais — Documentação e Qualidade (Iteração 5)
+
+1. Criar README com instruções de uso
+2. Documentar comandos do CLI
+3. Documentar integração CLI ↔ assinador.jar
+4. Criar testes ponta a ponta
+5. Validar cenários de erro (parâmetro inválido, JDK ausente, simulador ativo)
+
 ---
 
 ## Resumo do Backlog
@@ -236,6 +275,7 @@
 |------------|-------------------|
 | US-01 — Invocar assinador.jar via CLI | Iteração 1 |
 | US-02 — Simular assinatura com validação de parâmetros | Iterações 1 e 2 |
-| US-03 — Gerenciar ciclo de vida do Simulador | Iteração 3 |
-| US-04 — Provisionar JDK automaticamente | Iteração 3 |
-| US-05 — Disponibilizar binários multiplataforma | Iteração 0, 1 e 4 |
+| US-03 — Gerenciar ciclo de vida do Simulador | Iteração 4 |
+| US-04 — Provisionar JDK automaticamente | Iteração 4 |
+| US-05 — Disponibilizar binários multiplataforma | Iteração 3 |
+| Documentação e Qualidade | Iteração 5 |
