@@ -5,9 +5,11 @@ import com.runner.assinador.dto.request.VerifyRequestDTO;
 import com.runner.assinador.dto.response.SignResponseDTO;
 import com.runner.assinador.dto.response.VerifyResponseDTO;
 import com.runner.assinador.service.SignatureService;
+import com.runner.assinador.utils.TimestampStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.Instant;
 import java.util.Base64;
 
@@ -34,7 +36,7 @@ public class FakeSignatureService implements SignatureService {
         response.setSignatureJson(buildFhirSignature());
         response.setAlgorithm("RS256");
         response.setStrategyUsed(request.getTimestampStrategy() != null
-            ? request.getTimestampStrategy() : "iat");
+            ? request.getTimestampStrategy() : TimestampStrategy.IAT);
         response.setSigningTimestamp(request.getReferenceTimestamp() != null
             ? request.getReferenceTimestamp()
             : Instant.now().getEpochSecond());
