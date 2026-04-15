@@ -1,5 +1,6 @@
 package com.runner.assinador.dto.response;
 
+import com.runner.assinador.utils.TimestampStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class SignResponseDTO {
 
     private String algorithm;
 
-    private String strategyUsed;
+    private TimestampStrategy strategyUsed;
 
     private Long signingTimestamp;
 }

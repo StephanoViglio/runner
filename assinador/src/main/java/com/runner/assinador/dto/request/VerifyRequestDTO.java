@@ -1,5 +1,6 @@
 package com.runner.assinador.dto.request;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,19 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VerifyRequestDTO {
 
+    @NotBlank(message = "Assinatura deve ser informada")
     private String signatureBase64;
 
+    @NotNull(message = "Timestamp de referência é obrigatório")
+    @Min(value = 1751328000L, message = "Timestamp abaixo do mínimo permitido (01/07/2025)")
+    @Max(value = 4102444800L, message = "Timestamp acima do máximo permitido (31/12/2099)")
     private Long referenceTimestamp;
 
-    private String policyReferenceURI;
+    @NotBlank(message = "policyUri é obrigatória")
+    @Pattern(
+            regexp = "^https://fhir\\.saude\\.go\\.gov\\.br/r4/seguranca/ImplementationGuide/br\\.go\\.ses\\.seguranca\\|\\d+\\.\\d+\\.\\d+$",
+            message = "policyUri deve seguir o formato {baseUri}|{major.minor.patch}"
+    )
+    private String policyURI;
 
 }
