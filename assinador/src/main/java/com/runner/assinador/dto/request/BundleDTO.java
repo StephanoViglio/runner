@@ -1,6 +1,7 @@
 package com.runner.assinador.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BundleDTO {
 
-    @NotBlank(message = "Informe ao menos uma resource para o bundle")
-    private List<ResourceEntryDTO> resources;
+    @NotEmpty(message = "Informe ao menos uma entry para o bundle")
+    @Valid
+    private List<ResourceEntryDTO> entry;
 
 }

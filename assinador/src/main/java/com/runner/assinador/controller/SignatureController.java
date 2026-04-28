@@ -8,6 +8,7 @@ import com.runner.assinador.service.SignatureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -45,7 +46,7 @@ public class SignatureController {
             }
     )
     @PostMapping(value = "/sign", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SignResponseDTO> sign(@RequestBody SignRequestDTO request) {
+    public ResponseEntity<SignResponseDTO> sign(@RequestBody @Valid SignRequestDTO request) {
         SignResponseDTO response = signatureService.sign(request);
 
         log.info("POST /sign — done. algorithm: {}", response.getAlgorithm());
@@ -74,7 +75,7 @@ public class SignatureController {
             }
     )
     @PostMapping(value = "/validate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VerifyResponseDTO> validate(@RequestBody VerifyRequestDTO request) {
+    public ResponseEntity<VerifyResponseDTO> validate(@RequestBody @Valid VerifyRequestDTO request) {
         VerifyResponseDTO response = signatureService.verify(request);
 
         log.info("POST /validate — done. valid: {}", response.isValid());
