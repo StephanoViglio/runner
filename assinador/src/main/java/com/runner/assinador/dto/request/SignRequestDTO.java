@@ -14,13 +14,21 @@ import java.util.List;
 @NoArgsConstructor
 public class SignRequestDTO {
 
+    @NotNull(message = "bundle é obrigatório")
     @Valid
     private BundleDTO bundle;
 
+    @NotNull(message = "provenance é obrigatório")
+    @Valid
+    private ProvenanceDTO provenance;
+
+    @NotNull(message = "cryptographicMaterial é obrigatório")
     @Valid
     private CryptographicDTO cryptographicMaterial;
 
-    private List<String> certificateChain;
+    @NotNull(message = "certificateChain é obrigatório")
+    @Size(min = 2, message = "certificateChain deve conter ao menos 2 certificados (folha + raiz ICP-Brasil)")
+    private List<@NotBlank(message = "Cada certificado da cadeia deve ser uma string base64 não vazia") String> certificateChain;
 
     @NotNull(message = "Timestamp de referência é obrigatório")
     @Min(value = 1751328000L, message = "Timestamp abaixo do mínimo permitido (01/07/2025)")

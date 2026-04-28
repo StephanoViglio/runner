@@ -1,8 +1,9 @@
 package com.runner.assinador.dto.request;
 
+import com.runner.assinador.utils.CryptographicStrategy;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,17 +16,18 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CryptographicDTO {
 
+    @NotNull(message = "Informe a estratégia de criptografia que será utilizada")
+    private CryptographicStrategy cryptographicStrategy;
+
     @NotBlank(message = "Informe o PIN da criptografia")
     private String pin;
 
     @NotBlank(message = "Informe o identificador da criptografia")
     private String identifier;
 
-    @NotNull(message = "Informe o Slot ID da criptografia")
-    @Positive(message = "Slot ID deve ser um valor positivo")
+    @PositiveOrZero(message = "Slot ID deve ser um valor inteiro não negativo (0 é válido)")
     private Integer slotId;
 
     @Size(max = 32, message = "Token label deve ter no máximo 32 caracteres")
-    @NotBlank(message = "Informe o token label da criptografia")
     private String tokenLabel;
 }
