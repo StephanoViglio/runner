@@ -27,7 +27,6 @@ public class SignRequestDTO {
     private CryptographicDTO cryptographicMaterial;
 
     @NotNull(message = "certificateChain é obrigatório")
-    @Size(min = 2, message = "certificateChain deve conter ao menos 2 certificados (folha + raiz ICP-Brasil)")
     private List<@NotBlank(message = "Cada certificado da cadeia deve ser uma string base64 não vazia") String> certificateChain;
 
     @NotNull(message = "Timestamp de referência é obrigatório")
@@ -40,8 +39,8 @@ public class SignRequestDTO {
 
     @NotBlank(message = "policyUri é obrigatória")
     @Pattern(
-            regexp = "^https://fhir\\.saude\\.go\\.gov\\.br/r4/seguranca/ImplementationGuide/br\\.go\\.ses\\.seguranca\\|\\d+\\.\\d+\\.\\d+$",
-            message = "policyUri deve seguir o formato {baseUri}|{major.minor.patch}"
+            regexp = "^https://.+\\|\\d+\\.\\d+\\.\\d+$",
+            message = "policyUri deve seguir o formato https://<uri>|<major.minor.patch>"
     )
     private String policyUri;
 }

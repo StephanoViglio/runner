@@ -49,7 +49,6 @@ public class SignatureController {
     public ResponseEntity<SignResponseDTO> sign(@RequestBody @Valid SignRequestDTO request) {
         SignResponseDTO response = signatureService.sign(request);
 
-        log.info("POST /sign — done. algorithm: {}", response.getAlgorithm());
         return ResponseEntity.ok(response);
     }
 

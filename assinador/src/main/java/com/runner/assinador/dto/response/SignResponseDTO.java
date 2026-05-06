@@ -1,22 +1,25 @@
 package com.runner.assinador.dto.response;
 
-import com.runner.assinador.utils.TimestampStrategy;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SignResponseDTO {
 
-    private String signatureJson;
+    private List<SignatureCodingDTO> type;
 
-    private String algorithm;
+    private String when;
 
-    private TimestampStrategy strategyUsed;
+    private SignatureWhoDTO who;
 
-    private Long signingTimestamp;
+    private String targetFormat;
+
+    private String sigFormat;
+
+    private String data;
 }
