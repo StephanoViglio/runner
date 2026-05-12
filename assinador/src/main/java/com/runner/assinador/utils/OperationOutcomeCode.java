@@ -59,6 +59,12 @@ public enum OperationOutcomeCode {
             IssueSeverity.ERROR,
             IssueType.INVALID),
 
+    FORMAT_JWS_MALFORMED(
+            "FORMAT.JWS-MALFORMED",
+            "JWS Malformado",
+            IssueSeverity.ERROR,
+            IssueType.INVALID),
+
     CONFIG_TSA_CONFIG_MISSING(
             "CONFIG.TSA-CONFIG-MISSING",
             "Configuração da TSA Ausente",
@@ -69,8 +75,13 @@ public enum OperationOutcomeCode {
             "TIMESTAMP.OUT-OF-TOLERANCE-WINDOW",
             "Timestamp Fora da Janela de Tolerância de ±5 Minutos",
             IssueSeverity.ERROR,
-            IssueType.BUSINESS_RULE);
+            IssueType.BUSINESS_RULE),
 
+    VALIDATION_SUCCESS(
+            "VALIDATION.SUCCESS",
+            "Assinatura Digital Validada com Sucesso",
+            IssueSeverity.INFORMATION,
+            IssueType.INFORMATIONAL);
 
     public static final String CODE_SYSTEM_URL =
             "https://fhir.saude.go.gov.br/r4/seguranca/CodeSystem/situacao-excepcional-assinatura";
@@ -80,8 +91,7 @@ public enum OperationOutcomeCode {
     private final IssueSeverity severity;
     private final IssueType issueType;
 
-    OperationOutcomeCode(String code, String display,
-                         IssueSeverity severity, IssueType issueType) {
+    OperationOutcomeCode(String code, String display, IssueSeverity severity, IssueType issueType) {
         this.code      = code;
         this.display   = display;
         this.severity  = severity;
