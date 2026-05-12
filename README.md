@@ -37,22 +37,22 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Projeto Maven do `assinador.jar` criado | Omar | ✅ Concluído |
 | Interface `SignatureService` definida | Omar | ✅ Concluído |
 | `FakeSignatureService` com respostas pré-construídas | Omar | ✅ Concluído |
-| Modo CLI no `assinador.jar` | Omar | 🔄 Em andamento |
-| Modo servidor HTTP (`/sign` e `/validate`) | Omar | 🔄 Em andamento |
+| Modo CLI no `assinador.jar` | Omar | ✅ Concluído |
+| Modo servidor HTTP (`/sign` e `/validate`) | Omar | ✅ Concluído |
 | Testes unitários iniciais do `assinador.jar` | Omar | 🔄 Em andamento |
 
 ### Iteração 2 — Validação de Parâmetros e Tratamento de Erros ⏳ Não iniciada
 
 | Tarefa | Status |
 |--------|--------|
-| Mapeamento dos parâmetros das especificações FHIR | 🔄 Em andamento |
-| Validação completa de parâmetros no `assinador.jar` | 🔄 Em andamento |
-| Mensagens de erro estruturadas | ⏳ Não iniciado |
+| Mapeamento dos parâmetros das especificações FHIR | ✅ Concluído |
+| Validação completa de parâmetros no `assinador.jar` | ✅ Concluído |
+| Mensagens de erro estruturadas | ✅ Concluído |
 | Validação sintática de parâmetros no CLI | ⏳ Não iniciado |
 | `--help` detalhado com exemplos por subcomando | ⏳ Não iniciado |
 | Padronização de saída e exit codes | ⏳ Não iniciado |
 | Aprofundamento de testes unitários e de integração | ⏳ Não iniciado |
-| Integração com SonarQube | ⏳ Não iniciado |
+| Integração com SonarQube | 🔄 Em andamento |
 
 ### Iteração 3 — CI/CD e Binários ⏳ Não iniciada
 
