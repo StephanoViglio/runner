@@ -1,9 +1,9 @@
 package com.runner.assinador.controller;
 
+import com.runner.assinador.dto.outcome.OperationOutcomeDTO;
 import com.runner.assinador.dto.request.SignRequestDTO;
 import com.runner.assinador.dto.request.VerifyRequestDTO;
 import com.runner.assinador.dto.response.SignResponseDTO;
-import com.runner.assinador.dto.response.VerifyResponseDTO;
 import com.runner.assinador.service.SignatureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -55,18 +55,17 @@ public class SignatureController {
     @Operation(
             summary = "Validar assinatura digital",
             description = """
-                Valida uma assinatura digital no padrão JAdES/JWS com base nos dados originais.
-        
-                O validador reconstrói o hash SHA-256 a partir dos dados fornecidos em
-                `signingBundle.resources` (na mesma ordem utilizada durante a assinatura),
-                e verifica a assinatura utilizando a chave pública presente
-                no header x5c.
-        
-                Não é necessário dispositivo PKCS#11 para validação.
-        
-                Retorna o resultado da validação em caso de sucesso,
-                ou detalhes do erro em caso de falha.
-            """,
+            Valida uma assinatura digital no padrão JAdES/JWS.
+
+            Verifica a estrutura do JWS, os campos obrigatórios do protected header
+            (alg, x5c, sigPId) e a janela de tolerância do timestamp de referência.
+
+            Quando bundle e provenance são fornecidos, executa adicionalmente
+            a verificação de integridade do conteúdo assinado.
+
+            Retorna OperationOutcome com VALIDATION.SUCCESS em caso de sucesso,
+            ou com o código do erro em caso de falha.
+        """,
             responses = {
                     @ApiResponse(responseCode = "200", description = "Resultado da validação"),
                     @ApiResponse(responseCode = "422", description = "Entrada inválida"),
@@ -74,10 +73,14 @@ public class SignatureController {
             }
     )
     @PostMapping(value = "/validate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VerifyResponseDTO> validate(@RequestBody @Valid VerifyRequestDTO request) {
-        VerifyResponseDTO response = signatureService.verify(request);
+    public ResponseEntity<OperationOutcomeDTO> validate(
+            @RequestBody @Valid VerifyRequestDTO request) {
 
-        log.info("POST /validate — done. valid: {}", response.isValid());
+        OperationOutcomeDTO response = signatureService.verify(request);
+
+        log.info("POST /validate — done. outcome={}",
+                response.getIssues().getFirst().getDetails().getCoding().getFirst().getCode());
+
         return ResponseEntity.ok(response);
     }
 }
