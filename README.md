@@ -33,7 +33,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Projeto Go criado com `cobra` | Stephano | ✅ Concluído |
 | Subcomandos `criar` e `validar` com parâmetros básicos | Stephano | ✅ Concluído |
 | Validação de parâmetros obrigatórios no CLI | Stephano | ✅ Concluído |
-| Invocação do `assinador.jar` via CLI ou HTTP | Stephano | 🔄 Em andamento |
+| Invocação do `assinador.jar` via CLI ou HTTP | Stephano | ✅ Concluído |
 | Projeto Maven do `assinador.jar` criado | Omar | ✅ Concluído |
 | Interface `SignatureService` definida | Omar | ✅ Concluído |
 | `FakeSignatureService` com respostas pré-construídas | Omar | ✅ Concluído |
@@ -50,7 +50,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Mensagens de erro estruturadas | ✅ Concluído |
 | Validação sintática de parâmetros no CLI | ⏳ Não iniciado |
 | `--help` detalhado com exemplos por subcomando | ⏳ Não iniciado |
-| Padronização de saída e exit codes | ⏳ Não iniciado |
+| Padronização de saída e exit codes | 🔄 Em andamento |
 | Aprofundamento de testes unitários e de integração | ⏳ Não iniciado |
 | Integração com SonarQube | 🔄 Em andamento |
 
