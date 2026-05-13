@@ -22,7 +22,7 @@
   "certificateChain": [
     "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAfake"
   ],
-  "referenceTimestamp": 1746450000,
+  "referenceTimestamp": 1778634475,
   "timestampStrategy": "IAT",
-  "policyUri": "https://fhir.saude.go.gov.br/r4/seguranca/ImplementationGuide/br.go.ses.seguranca%7C0.0.2"
+  "policyUri": "https://fhir.saude.go.gov.br/r4/seguranca/ImplementationGuide/br.go.ses.seguranca|0.0.2"
 }
