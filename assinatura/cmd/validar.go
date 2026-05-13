@@ -1,7 +1,12 @@
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -9,28 +14,67 @@ import (
 var validarCmd = &cobra.Command{
 	Use:   "validar",
 	Short: "Valida uma assinatura digital via assinador.jar",
-	Long: `Invoca o assinador.jar para simular a validação de uma assinatura digital.
+	Long: `Invoca o assinador.jar para validar uma assinatura digital no padrão JAdES/JWS.
 
-Os parâmetros necessários seguem as especificações FHIR de segurança.
+O parâmetro --arquivo deve apontar para um JSON com os dados da requisição.
+Os campos bundle e provenance são opcionais — quando fornecidos, o assinador
+executa também a verificação de integridade do conteúdo assinado.
 
 Exemplo:
-  assinatura validar --conteudo <valor> --assinatura <valor>`,
+  assinatura validar --arquivo validacao.json`,
 	Run: func(cmd *cobra.Command, args []string) {
-		conteudo, _ := cmd.Flags().GetString("conteudo")
-		assinatura, _ := cmd.Flags().GetString("assinatura")
+		arquivo, _ := cmd.Flags().GetString("arquivo")
 
-		fmt.Printf("Validando assinatura...\n")
-		fmt.Printf("  Conteudo:    %s\n", conteudo)
-		fmt.Printf("  Assinatura:  %s\n", assinatura)
+		// Lê o arquivo JSON
+		conteudo, err := os.ReadFile(arquivo)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Erro ao ler o arquivo '%s': %v\n", arquivo, err)
+			os.Exit(1)
+		}
+
+		// Valida se o conteúdo é um JSON válido
+		if !json.Valid(conteudo) {
+			fmt.Fprintf(os.Stderr, "Erro: o arquivo '%s' não contém um JSON válido\n", arquivo)
+			os.Exit(1)
+		}
+
+		// Envia para o endpoint
+		url := "http://localhost:8080/validate"
+		resp, err := http.Post(url, "application/json", bytes.NewBuffer(conteudo))
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Erro ao chamar o assinador: %v\n", err)
+			os.Exit(1)
+		}
+		defer resp.Body.Close()
+
+		// Lê o retorno
+		corpo, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Erro ao ler resposta do assinador: %v\n", err)
+			os.Exit(1)
+		}
+
+		// Trata erros HTTP
+		if resp.StatusCode != http.StatusOK {
+			fmt.Fprintf(os.Stderr, "Assinador retornou erro %d:\n%s\n", resp.StatusCode, string(corpo))
+			os.Exit(1)
+		}
+
+		// Formata e exibe o retorno
+		var resultado interface{}
+		if err := json.Unmarshal(corpo, &resultado); err != nil {
+			fmt.Println(string(corpo))
+			return
+		}
+
+		saida, _ := json.MarshalIndent(resultado, "", "  ")
+		fmt.Println(string(saida))
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(validarCmd)
 
-	validarCmd.Flags().String("conteudo", "", "Conteúdo original que foi assinado (obrigatório)")
-	validarCmd.Flags().String("assinatura", "", "Assinatura digital a ser validada (obrigatório)")
-
-	validarCmd.MarkFlagRequired("conteudo")
-	validarCmd.MarkFlagRequired("assinatura")
+	validarCmd.Flags().String("arquivo", "", "Caminho para o arquivo JSON com os dados da requisição (obrigatório)")
+	validarCmd.MarkFlagRequired("arquivo")
 }
