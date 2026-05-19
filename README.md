@@ -49,8 +49,8 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Validação completa de parâmetros no `assinador.jar` | ✅ Concluído |
 | Mensagens de erro estruturadas | ✅ Concluído |
 | Validação sintática de parâmetros no CLI | ⏳ Não iniciado |
-| `--help` detalhado com exemplos por subcomando | ⏳ Não iniciado |
-| Padronização de saída e exit codes | 🔄 Em andamento |
+| `--help` detalhado com exemplos por subcomando | ✅ Concluído |
+| Padronização de saída e exit codes | ✅ Concluído |
 | Aprofundamento de testes unitários e de integração | ⏳ Não iniciado |
 | Integração com SonarQube | 🔄 Em andamento |
 
