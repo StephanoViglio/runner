@@ -18,19 +18,20 @@ func invocarHTTP(endpoint string, conteudo []byte) {
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(conteudo))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Erro ao chamar o assinador: %v\n", err)
-		os.Exit(1)
+		fmt.Fprintf(os.Stderr, "Dica: verifique se o servidor está em execução em %s\n", defaultServerURL)
+		os.Exit(ExitErroUso)
 	}
 	defer resp.Body.Close()
 
 	corpo, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Erro ao ler resposta do assinador: %v\n", err)
-		os.Exit(1)
+		os.Exit(ExitErroInesperado)
 	}
 
 	if resp.StatusCode != http.StatusOK {
 		fmt.Fprintf(os.Stderr, "Assinador retornou erro %d:\n%s\n", resp.StatusCode, string(corpo))
-		os.Exit(1)
+		os.Exit(ExitErroUso)
 	}
 
 	imprimirJSON(corpo)
@@ -43,7 +44,7 @@ func invocarCLI(subcomando string, arquivoJSON string, jarPath string) {
 
 	if err := cmd.Run(); err != nil {
 		fmt.Fprintf(os.Stderr, "Erro ao executar o assinador.jar: %v\n", err)
-		os.Exit(1)
+		os.Exit(ExitErroUso)
 	}
 }
 
@@ -51,11 +52,11 @@ func lerArquivoJSON(caminho string) []byte {
 	conteudo, err := os.ReadFile(caminho)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Erro ao ler o arquivo '%s': %v\n", caminho, err)
-		os.Exit(1)
+		os.Exit(ExitErroUso)
 	}
 	if !json.Valid(conteudo) {
 		fmt.Fprintf(os.Stderr, "Erro: o arquivo '%s' não contém um JSON válido\n", caminho)
-		os.Exit(1)
+		os.Exit(ExitErroUso)
 	}
 	return conteudo
 }
@@ -68,4 +69,5 @@ func imprimirJSON(corpo []byte) {
 	}
 	saida, _ := json.MarshalIndent(resultado, "", "  ")
 	fmt.Println(string(saida))
+	os.Exit(ExitSucesso)
 }
