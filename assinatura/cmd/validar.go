@@ -5,24 +5,46 @@ import (
 )
 
 var validarCmd = &cobra.Command{
-	Use:   "validar",
+	Use:   "validar --arquivo <caminho>",
 	Short: "Valida uma assinatura digital via assinador.jar",
-	Long: `Invoca o assinador.jar para validar uma assinatura digital no padrão JAdES/JWS.
+	Long: `Valida uma assinatura digital no padrão JAdES/JWS a partir de um arquivo JSON.
 
-Por padrão utiliza o modo HTTP (servidor deve estar em execução).
-Use --local para invocar o assinador.jar diretamente via linha de comando.
+O arquivo JSON deve conter os seguintes campos:
+
+  Obrigatórios:
+    signatureData       Assinatura digital em Base64 (campo "data" retornado pelo comando criar)
+    referenceTimestamp  Timestamp Unix da operação (deve estar dentro de ±5 minutos do servidor)
+    policyUri           URI da política no formato https://<uri>|<major.minor.patch>
+
+  Opcionais:
+    bundle      Recursos FHIR originais — quando fornecido, verifica também a integridade do conteúdo
+    provenance  Referências dos recursos alvo — deve ser fornecido junto com bundle
+
+Modos de execução:
+  HTTP (padrão)  Envia o JSON para o servidor em execução via POST /validate
+  CLI (--local)  Invoca o assinador.jar diretamente como subprocesso
+
+Códigos de retorno:
+  0  Validação concluída com sucesso
+  1  Erro de uso (parâmetro inválido, arquivo não encontrado, erro do backend)
+  2  Erro inesperado
 
 Exemplos:
+  # Modo HTTP (padrão) — servidor deve estar em execução
   assinatura validar --arquivo validacao.json
+
+  # Modo CLI — invoca o jar diretamente
   assinatura validar --arquivo validacao.json --local
-  assinatura validar --arquivo validacao.json --local --jar /caminho/assinador.jar`,
+
+  # Modo CLI com URL alternativa para download do jar
+  assinatura validar --arquivo validacao.json --local --source https://exemplo.com/assinador.jar`,
 	Run: func(cmd *cobra.Command, args []string) {
 		arquivo, _ := cmd.Flags().GetString("arquivo")
 		local, _ := cmd.Flags().GetBool("local")
-		jar, _ := cmd.Flags().GetString("jar")
+		source, _ := cmd.Flags().GetString("source")
 
 		if local {
-			invocarCLI("validate", arquivo, jar)
+			invocarCLI("validate", arquivo, source)
 		} else {
 			conteudo := lerArquivoJSON(arquivo)
 			invocarHTTP("/validate", conteudo)
@@ -35,7 +57,7 @@ func init() {
 
 	validarCmd.Flags().String("arquivo", "", "Caminho para o arquivo JSON com os dados da requisição (obrigatório)")
 	validarCmd.Flags().Bool("local", false, "Invoca o assinador.jar diretamente via CLI em vez de HTTP")
-	validarCmd.Flags().String("jar", defaultJarPath, "Caminho para o assinador.jar (usado apenas com --local)")
+	validarCmd.Flags().String("source", defaultJarPath, "Caminho ou URL alternativa para o assinador.jar (usado apenas com --local)")
 
 	validarCmd.MarkFlagRequired("arquivo")
 }
