@@ -1,4 +1,4 @@
-package com.runner.assinador.adapter.configuration;
+package com.runner.assinador.infrastructure.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
