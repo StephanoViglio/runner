@@ -1,27 +1,35 @@
 package com.runner.assinador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runner.assinador.cli.*;
-import com.runner.assinador.service.SignatureService;
-import com.runner.assinador.service.impl.FakeSignatureService;
-import com.runner.assinador.validation.SignRequestValidator;
-import com.runner.assinador.validation.VerifyRequestValidator;
+import com.runner.assinador.adapter.in.cli.AssinadorCommand;
+import com.runner.assinador.adapter.in.cli.SignCommand;
+import com.runner.assinador.adapter.in.cli.ValidateCommand;
+import com.runner.assinador.adapter.in.cli.CliFileParser;
+import com.runner.assinador.adapter.in.cli.CliOutputFormatter;
+import com.runner.assinador.adapter.in.cli.mapper.CliSignatureMapper;
+import com.runner.assinador.adapter.out.signature.FakeSignatureAdapter;
+import com.runner.assinador.application.usecase.SignDocumentService;
+import com.runner.assinador.application.usecase.VerifySignatureService;
+import com.runner.assinador.domain.port.in.SignDocumentUseCase;
+import com.runner.assinador.domain.port.in.VerifySignatureUseCase;
+import com.runner.assinador.domain.port.out.SignatureProvider;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
 public class AssinadorCli {
 
     public static void main(String[] args) {
-        ObjectMapper objectMapper              = new ObjectMapper();
-        SignRequestValidator signValidator      = new SignRequestValidator(objectMapper);
-        VerifyRequestValidator verifyValidator  = new VerifyRequestValidator(objectMapper);
-        SignatureService service                = new FakeSignatureService(signValidator, verifyValidator);
-        CliOutputFormatter formatter            = new CliOutputFormatter(objectMapper);
-        CliInputValidator inputValidator        = new CliInputValidator();
-        CliFileParser fileParser                = new CliFileParser(objectMapper);
+        ObjectMapper objectMapper       = new ObjectMapper();
+        SignatureProvider provider       = new FakeSignatureAdapter();
+        SignDocumentUseCase signUseCase  = new SignDocumentService(provider);
+        VerifySignatureUseCase verifyUseCase = new VerifySignatureService(provider, objectMapper);
 
-        SignCommand signCommand         = new SignCommand(service, formatter, inputValidator, fileParser);
-        ValidateCommand validateCommand = new ValidateCommand(service, formatter, inputValidator, fileParser);
+        CliOutputFormatter formatter    = new CliOutputFormatter(objectMapper);
+        CliFileParser fileParser        = new CliFileParser(objectMapper);
+        CliSignatureMapper mapper        = new CliSignatureMapper();
+
+        SignCommand signCommand         = new SignCommand(signUseCase, formatter, fileParser, mapper);
+        ValidateCommand validateCommand = new ValidateCommand(verifyUseCase, formatter, fileParser, mapper);
         AssinadorCommand rootCommand    = new AssinadorCommand();
 
         IFactory factory = new IFactory() {
