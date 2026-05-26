@@ -1,15 +1,11 @@
 package com.runner.assinador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runner.assinador.adapter.in.cli.AssinadorCommand;
-import com.runner.assinador.adapter.in.cli.SignCommand;
-import com.runner.assinador.adapter.in.cli.ValidateCommand;
-import com.runner.assinador.adapter.in.cli.CliFileParser;
-import com.runner.assinador.adapter.in.cli.CliOutputFormatter;
+import com.runner.assinador.adapter.in.cli.*;
 import com.runner.assinador.adapter.in.cli.mapper.CliSignatureMapper;
 import com.runner.assinador.adapter.out.signature.FakeSignatureAdapter;
-import com.runner.assinador.application.usecase.SignDocumentService;
-import com.runner.assinador.application.usecase.VerifySignatureService;
+import com.runner.assinador.application.service.SignDocumentService;
+import com.runner.assinador.application.service.VerifySignatureService;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;
 import com.runner.assinador.domain.port.in.VerifySignatureUseCase;
 import com.runner.assinador.domain.port.out.SignatureProvider;
@@ -20,9 +16,9 @@ public class AssinadorCli {
 
     public static void main(String[] args) {
         ObjectMapper objectMapper       = new ObjectMapper();
-        SignatureProvider provider       = new FakeSignatureAdapter();
+        SignatureProvider provider       = new FakeSignatureAdapter(objectMapper);
         SignDocumentUseCase signUseCase  = new SignDocumentService(provider);
-        VerifySignatureUseCase verifyUseCase = new VerifySignatureService(provider, objectMapper);
+        VerifySignatureUseCase verifyUseCase = new VerifySignatureService(provider);
 
         CliOutputFormatter formatter    = new CliOutputFormatter(objectMapper);
         CliFileParser fileParser        = new CliFileParser(objectMapper);

@@ -1,17 +1,13 @@
 package com.runner.assinador.adapter.in.rest.mapper;
 
-import com.runner.assinador.adapter.in.rest.dto.request.ResourceEntryDTO;
 import com.runner.assinador.adapter.in.rest.dto.request.SignRequestDTO;
 import com.runner.assinador.adapter.in.rest.dto.request.VerifyRequestDTO;
 import com.runner.assinador.adapter.in.rest.dto.response.*;
 import com.runner.assinador.adapter.shared.factory.OperationOutcomeFactory;
-import com.runner.assinador.application.command.SignDocumentCommand;
-import com.runner.assinador.application.command.VerifySignatureCommand;
-import com.runner.assinador.domain.model.BundleData;
-import com.runner.assinador.domain.model.ProvenanceData;
-import com.runner.assinador.domain.model.ResourceEntry;
-import com.runner.assinador.domain.model.SignatureResult;
-import com.runner.assinador.domain.model.VerificationResult;
+import com.runner.assinador.adapter.shared.outcome.OperationOutcome;
+import com.runner.assinador.domain.model.*;
+import com.runner.assinador.domain.port.in.SignDocumentCommand;
+import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,15 +24,19 @@ public class RestSignatureMapper {
 
         ProvenanceData provenance = new ProvenanceData(dto.getProvenance().getTarget());
 
-        return new SignDocumentCommand(
-                bundle,
-                provenance,
+        CryptographicMaterial cryptographicMaterial = new CryptographicMaterial(
                 dto.getCryptographicMaterial().getCryptographicStrategy(),
                 dto.getCryptographicMaterial().getPin(),
                 dto.getCryptographicMaterial().getIdentifier(),
                 dto.getCryptographicMaterial().getSlotId(),
                 dto.getCryptographicMaterial().getTokenLabel(),
-                dto.getCertificateChain(),
+                dto.getCertificateChain()
+        );
+
+        return new SignDocumentCommand(
+                bundle,
+                provenance,
+                cryptographicMaterial,
                 dto.getReferenceTimestamp(),
                 dto.getTimestampStrategy(),
                 dto.getPolicyUri()
@@ -75,7 +75,7 @@ public class RestSignatureMapper {
                 result.getTargetFormat(), result.getSigFormat(), result.getData());
     }
 
-    public OperationOutcomeDTO toOperationOutcome(VerificationResult result) {
+    public OperationOutcome toOperationOutcome(VerificationResult result) {
         return OperationOutcomeFactory.fromVerificationResult(result);
     }
 }
