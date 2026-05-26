@@ -1,12 +1,13 @@
-package com.runner.assinador.application.usecase;
+package com.runner.assinador.application.service;
 
-import com.runner.assinador.application.command.SignDocumentCommand;
 import com.runner.assinador.domain.exception.DomainErrorCode;
 import com.runner.assinador.domain.exception.SignatureException;
 import com.runner.assinador.domain.model.BundleData;
 import com.runner.assinador.domain.model.ProvenanceData;
 import com.runner.assinador.domain.model.ResourceEntry;
+import com.runner.assinador.domain.model.SignatureRequest;
 import com.runner.assinador.domain.model.SignatureResult;
+import com.runner.assinador.domain.port.in.SignDocumentCommand;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;
 import com.runner.assinador.domain.port.out.SignatureProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,16 +31,25 @@ public class SignDocumentService implements SignDocumentUseCase {
 
     @Override
     public SignatureResult execute(SignDocumentCommand command) {
-        log.info("SignDocumentService.execute() — iniciando validações de negócio");
+        log.info("SignDocumentService.execute() — iniciando validações");
 
         validateTimestampWindow(command.getReferenceTimestamp());
         validateBundleEntries(command.getBundle());
         validateProvenanceTargets(command.getBundle(), command.getProvenance());
 
+        SignatureRequest request = new SignatureRequest(
+                command.getBundle(),
+                command.getProvenance(),
+                command.getCryptographicMaterial(),
+                command.getReferenceTimestamp(),
+                command.getTimestampStrategy(),
+                command.getPolicyUri()
+        );
+
         log.info("Validações concluídas — delegando para SignatureProvider. strategy={}",
                 command.getTimestampStrategy());
 
-        return signatureProvider.sign(command);
+        return signatureProvider.sign(request);
     }
 
     private void validateTimestampWindow(Long referenceTimestamp) {
