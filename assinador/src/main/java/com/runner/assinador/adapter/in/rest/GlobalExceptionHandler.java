@@ -1,6 +1,6 @@
 package com.runner.assinador.adapter.in.rest;
 
-import com.runner.assinador.adapter.in.rest.dto.response.OperationOutcomeDTO;
+import com.runner.assinador.adapter.shared.outcome.OperationOutcome;
 import com.runner.assinador.adapter.shared.IssueSeverity;
 import com.runner.assinador.adapter.shared.OperationOutcomeCode;
 import com.runner.assinador.adapter.shared.factory.OperationOutcomeFactory;
@@ -19,7 +19,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SignatureException.class)
-    public ResponseEntity<OperationOutcomeDTO> handleSignatureException(SignatureException ex) {
+    public ResponseEntity<OperationOutcome> handleSignatureException(SignatureException ex) {
         OperationOutcomeCode code = OperationOutcomeCode.fromCode(ex.getErrorCode().getCode());
 
         log.warn("SignatureException: code={} diagnostics={}", code.getCode(), ex.getDiagnostics());
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<OperationOutcomeDTO> handleValidationException(
+    public ResponseEntity<OperationOutcome> handleValidationException(
             MethodArgumentNotValidException ex) {
 
         List<String> messages = ex.getBindingResult().getFieldErrors().stream()
@@ -40,24 +40,25 @@ public class GlobalExceptionHandler {
         log.warn("MethodArgumentNotValidException: {}", messages);
 
         return ResponseEntity
-                .status(422)
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(OperationOutcomeFactory.ofBindingErrors(messages));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<OperationOutcomeDTO> handleUnexpected(Exception ex) {
+    public ResponseEntity<OperationOutcome> handleUnexpected(Exception ex) {
         log.error("Erro inesperado não tratado", ex);
 
         return ResponseEntity
-                .status(500)
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(OperationOutcomeFactory.of(
-                        OperationOutcomeCode.FORMAT_JSON_MALFORMED,
-                        "Erro interno inesperado: " + ex.getMessage()));
+                        OperationOutcomeCode.INTERNAL_SERVER_ERROR,
+                        "Erro interno inesperado. Consulte os logs do servidor."));
     }
 
     private int resolveHttpStatus(IssueSeverity severity) {
         return switch (severity) {
-            case FATAL, ERROR -> 422;
+            case FATAL -> HttpStatus.INTERNAL_SERVER_ERROR.value();
+            case ERROR -> HttpStatus.UNPROCESSABLE_ENTITY.value();
             case WARNING, INFORMATION -> HttpStatus.OK.value();
         };
     }

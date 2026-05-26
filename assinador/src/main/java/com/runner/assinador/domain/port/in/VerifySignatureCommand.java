@@ -1,4 +1,4 @@
-package com.runner.assinador.application.command;
+package com.runner.assinador.domain.port.in;
 
 import com.runner.assinador.domain.model.BundleData;
 import com.runner.assinador.domain.model.ProvenanceData;

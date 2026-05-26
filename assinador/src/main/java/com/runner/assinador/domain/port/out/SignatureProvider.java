@@ -1,13 +1,13 @@
 package com.runner.assinador.domain.port.out;
 
-import com.runner.assinador.application.command.SignDocumentCommand;
-import com.runner.assinador.application.command.VerifySignatureCommand;
+import com.runner.assinador.domain.model.SignatureRequest;
 import com.runner.assinador.domain.model.SignatureResult;
+import com.runner.assinador.domain.model.VerificationRequest;
 import com.runner.assinador.domain.model.VerificationResult;
 
 public interface SignatureProvider {
 
-    SignatureResult sign(SignDocumentCommand command);
+    SignatureResult sign(SignatureRequest request);
 
-    VerificationResult verify(VerifySignatureCommand command);
+    VerificationResult verify(VerificationRequest request);
 }

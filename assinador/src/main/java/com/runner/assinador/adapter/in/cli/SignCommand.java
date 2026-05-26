@@ -4,7 +4,7 @@ import com.runner.assinador.adapter.in.cli.input.SignInput;
 import com.runner.assinador.adapter.in.cli.mapper.CliSignatureMapper;
 import com.runner.assinador.adapter.shared.factory.OperationOutcomeFactory;
 import com.runner.assinador.adapter.shared.OperationOutcomeCode;
-import com.runner.assinador.application.command.SignDocumentCommand;
+import com.runner.assinador.domain.port.in.SignDocumentCommand;
 import com.runner.assinador.domain.exception.SignatureException;
 import com.runner.assinador.domain.model.SignatureResult;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;

@@ -2,11 +2,11 @@ package com.runner.assinador.adapter.in.rest;
 
 import com.runner.assinador.adapter.in.rest.dto.request.SignRequestDTO;
 import com.runner.assinador.adapter.in.rest.dto.request.VerifyRequestDTO;
-import com.runner.assinador.adapter.in.rest.dto.response.OperationOutcomeDTO;
+import com.runner.assinador.adapter.shared.outcome.OperationOutcome;
 import com.runner.assinador.adapter.in.rest.dto.response.SignResponseDTO;
 import com.runner.assinador.adapter.in.rest.mapper.RestSignatureMapper;
-import com.runner.assinador.application.command.SignDocumentCommand;
-import com.runner.assinador.application.command.VerifySignatureCommand;
+import com.runner.assinador.domain.port.in.SignDocumentCommand;
+import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import com.runner.assinador.domain.model.SignatureResult;
 import com.runner.assinador.domain.model.VerificationResult;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;
@@ -55,7 +55,7 @@ public class SignatureController {
     @PostMapping(value = "/validate",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OperationOutcomeDTO> validate(@RequestBody @Valid VerifyRequestDTO request) {
+    public ResponseEntity<OperationOutcome> validate(@RequestBody @Valid VerifyRequestDTO request) {
         VerifySignatureCommand command  = mapper.toVerifyCommand(request);
         VerificationResult result       = verifySignatureUseCase.execute(command);
         return ResponseEntity.ok(mapper.toOperationOutcome(result));
