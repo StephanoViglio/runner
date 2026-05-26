@@ -41,7 +41,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Modo servidor HTTP (`/sign` e `/validate`) | Omar | ✅ Concluído |
 | Testes unitários iniciais do `assinador.jar` | Omar | 🔄 Em andamento |
 
-### Iteração 2 — Validação de Parâmetros e Tratamento de Erros ⏳ Não iniciada
+### Iteração 2 — Validação de Parâmetros e Tratamento de Erros 🔄 Em andamento
 
 | Tarefa | Status |
 |--------|--------|
@@ -63,12 +63,16 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Publicação no GitHub Releases com checksums SHA256 | ⏳ Não iniciado |
 | Versionamento semântico (SemVer) | ⏳ Não iniciado |
 
-### Iteração 4 — Simulador CLI e Provisionamento de JDK ⏳ Não iniciada
+### Iteração 4 — Simulador CLI e Provisionamento de JDK 🔄 Em andamento
 
 | Tarefa | Status |
 |--------|--------|
-| CLI `simulador` com comandos `start`, `stop` e `status` | ⏳ Não iniciado |
-| Download do `simulador.jar` quando ausente | ⏳ Não iniciado |
+| CLI `simulador` com comandos `start`, `stop` e `status` | ✅ Concluído |
+| Verificação de porta 8443 antes de iniciar | ✅ Concluído |
+| Download do `simulador.jar` quando ausente | ✅ Concluído |
+| Comparação de versão local vs remota via `release.json` | ✅ Concluído |
+| Download do JRE via Eclipse Temurin | ✅ Concluído |
+| Persistência de PID e porta em `~/.hubsaude` | ✅ Concluído |
 | Detecção e download automático do JDK em `~/.hubsaude/jdk` | ⏳ Não iniciado |
 | Provisionamento de JDK para Windows, Linux e macOS | ⏳ Não iniciado |
 | Pacote Go compartilhado para provisionamento | ⏳ Não iniciado |
@@ -92,7 +96,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Repositório configurado + CI/CD base | Pipeline rodando sem erros | ⏳ Não iniciado |
 | `assinador.jar` funcional | Todos os critérios de US-02 cobertos | 🔄 Em andamento |
 | CLI `assinatura` funcional | Todos os critérios de US-01 cobertos | 🔄 Em andamento |
-| CLI `simulador` funcional | Todos os critérios de US-03 cobertos | ⏳ Não iniciado |
+| CLI `simulador` funcional | Todos os critérios de US-03 cobertos | 🔄 Em andamento |
 | Provisionamento de JDK | Todos os critérios de US-04 cobertos | ⏳ Não iniciado |
 | Suite de testes completa | Cobertura ≥ 70%, todos os critérios de aceitação passando | ⏳ Não iniciado |
 | Binários publicados | Release no GitHub com checksums SHA256 | ⏳ Não iniciado |
