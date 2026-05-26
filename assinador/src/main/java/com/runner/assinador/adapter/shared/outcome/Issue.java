@@ -1,4 +1,4 @@
-package com.runner.assinador.adapter.in.rest.dto.response;
+package com.runner.assinador.adapter.shared.outcome;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import java.util.List;
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IssueDTO {
+public class Issue {
     private String severity;
     private String code;
-    private CodeableConceptDTO details;
+    private CodeableConcept details;
     private String diagnostics;
     private List<String> location;
 }

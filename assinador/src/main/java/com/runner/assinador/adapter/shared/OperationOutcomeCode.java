@@ -77,6 +77,18 @@ public enum OperationOutcomeCode {
             IssueSeverity.ERROR,
             IssueType.BUSINESS_RULE),
 
+    CRYPTO_DIGEST_FAILURE(
+            "CRYPTO.DIGEST-FAILURE",
+            "Falha ao Calcular Resumo Criptográfico",
+            IssueSeverity.ERROR,
+            IssueType.EXCEPTION),
+
+    INTERNAL_SERVER_ERROR(
+            "INTERNAL.SERVER-ERROR",
+            "Erro Interno do Servidor",
+            IssueSeverity.FATAL,
+            IssueType.EXCEPTION),
+
     VALIDATION_SUCCESS(
             "VALIDATION.SUCCESS",
             "Assinatura Digital Validada com Sucesso",
@@ -102,6 +114,6 @@ public enum OperationOutcomeCode {
         for (OperationOutcomeCode c : values()) {
             if (c.getCode().equals(code)) return c;
         }
-        return FORMAT_JSON_MALFORMED;
+        return INTERNAL_SERVER_ERROR;
     }
 }
