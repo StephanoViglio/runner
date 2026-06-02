@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class FakeSignatureAdapter implements SignatureProvider {
+public class FakeSignatureProvider implements SignatureProvider {
 
     private static final String FAKE_CERT_DER_BASE64  = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAfake";
     private static final String FAKE_CPF              = "98765432100";
