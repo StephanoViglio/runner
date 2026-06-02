@@ -1,9 +1,9 @@
 package com.runner.assinador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.runner.assinador.adapter.in.cli.*;
-import com.runner.assinador.adapter.in.cli.mapper.CliSignatureMapper;
-import com.runner.assinador.adapter.out.signature.FakeSignatureAdapter;
+import com.runner.assinador.presentation.in.cli.*;
+import com.runner.assinador.presentation.in.cli.mapper.CliSignatureMapper;
+import com.runner.assinador.presentation.out.signature.FakeSignatureAdapter;
 import com.runner.assinador.application.service.SignDocumentService;
 import com.runner.assinador.application.service.VerifySignatureService;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;
