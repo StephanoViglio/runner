@@ -117,22 +117,21 @@ main  ←  (Pull Request de branch de ação)  ←  feature/* | fix/* | refactor
 - **`main`** — branch principal, simula o ambiente de produção. Só recebe código via Pull Request.
 - **Branches de ação** — criadas a partir de `main`, seguindo o padrão `tipo/descricao` (ex: `feature/assinar-arquivo`, `fix/validacao-cert`).
 
-### Estrutura de Pastas
+### Arquitetura
+
+A aplicação Java (`assinador.jar`) segue Arquitetura Hexagonal com Onion Architecture, organizada em quatro camadas (`domain`, `application`, `presentation`, `infrastructure`).
+
+Para detalhes sobre a estrutura de pastas, responsabilidades de cada camada, portas (ports) e regra de dependência, consulte [arquitetura.md](docs/arquitetura.md).
+
+A CLI Go (`assinatura`) segue uma estrutura simples baseada em `cobra`:
 
 ```
-runner/
-├── assinador/            # Aplicação Java (assinador.jar)
-│   ├── cli/              # Entrada via linha de comando
-│   ├── http/             # Modo servidor (REST)
-│   ├── application/      # Casos de uso
-│   ├── domain/           # Regras e validações de negócio
-│   └── infrastructure/   # Parsing, utilitários, etc.
-└── assinatura/           # CLI Go (assinatura)
-    ├── cmd/
-    │   ├── root.go       # Comando raiz
-    │   ├── criar.go      # Subcomando criar
-    │   └── validar.go    # Subcomando validar
-    └── main.go
+assinatura/
+├── cmd/
+│   ├── root.go       # Comando raiz
+│   ├── criar.go      # Subcomando criar
+│   └── validar.go    # Subcomando validar
+└── main.go
 ```
 
 ### Stack Tecnológica
