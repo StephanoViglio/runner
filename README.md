@@ -125,14 +125,14 @@ Para detalhes sobre a estrutura de pastas, responsabilidades de cada camada, por
 
 A CLI Go (`assinatura`) segue uma estrutura simples baseada em `cobra`:
 
-​```
+```
 assinatura/
 ├── cmd/
 │   ├── root.go       # Comando raiz
 │   ├── criar.go      # Subcomando criar
 │   └── validar.go    # Subcomando validar
 └── main.go
-​```
+```
 
 ### Stack Tecnológica
 
