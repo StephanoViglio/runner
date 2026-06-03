@@ -8,14 +8,18 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"time"
 )
 
 const defaultServerURL = "http://localhost:8080"
 const defaultJarPath = "../assinador/target/assinador.jar"
+const httpTimeout = 10 * time.Second
+
+var httpClient = &http.Client{Timeout: httpTimeout}
 
 func invocarHTTP(endpoint string, conteudo []byte) {
 	url := defaultServerURL + endpoint
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(conteudo))
+	resp, err := httpClient.Post(url, "application/json", bytes.NewBuffer(conteudo))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Erro ao chamar o assinador: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Dica: verifique se o servidor está em execução em %s\n", defaultServerURL)
@@ -69,5 +73,4 @@ func imprimirJSON(corpo []byte) {
 	}
 	saida, _ := json.MarshalIndent(resultado, "", "  ")
 	fmt.Println(string(saida))
-	os.Exit(ExitSucesso)
 }
