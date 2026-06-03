@@ -1,0 +1,28 @@
+# IntelliJ (raiz e outros módulos)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Arquivos de teste local
+requisicao.json
+validacao.json
+invalido.json
+
+# Diretório de trabalho do Runner
+.hubsaude/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
