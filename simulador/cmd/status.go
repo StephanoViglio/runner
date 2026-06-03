@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 )
+
+const statusTimeout = 5 * time.Second
 
 var statusCmd = &cobra.Command{
 	Use:   "status",
@@ -22,12 +25,13 @@ Exemplo:
 			fmt.Println("Status: parado (nenhuma instância registrada)")
 			os.Exit(0)
 		}
-
+		client := &http.Client{Timeout: statusTimeout}
 		url := fmt.Sprintf("http://localhost:%d/api/info", state.Port)
-		resp, err := http.Get(url)
+		resp, err := client.Get(url)
 		if err != nil {
 			fmt.Printf("Status: não responsivo (PID %d registrado, mas sem resposta na porta %d)\n",
 				state.PID, state.Port)
+				fmt.Fprintf(os.Stderr, "Dica: o processo pode ter encerrado inesperadamente. Execute 'simulador start' para reiniciar.\n")
 			os.Exit(0)
 		}
 		defer resp.Body.Close()
