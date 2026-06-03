@@ -8,6 +8,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "simulador",
+	Version: "0.1.0",
 	Short: "CLI do Sistema Runner para gerenciamento do Simulador do HubSaúde",
 	Long: `simulador é a interface de linha de comandos do Sistema Runner
 para gerenciar o ciclo de vida do Simulador do HubSaúde.
