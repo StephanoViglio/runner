@@ -6,7 +6,7 @@ import (
 )
 
 func TestSalvarELerState(t *testing.T) {
-	// Usa diretório temporário para não poluir ~/.hubsaude
+
 	dir := t.TempDir()
 	hubsaudeDirOverride = dir
 
@@ -16,12 +16,10 @@ func TestSalvarELerState(t *testing.T) {
 		Version: "1.0.0",
 	}
 
-	// Salva
 	if err := salvarState(state); err != nil {
 		t.Fatalf("erro ao salvar state: %v", err)
 	}
 
-	// Lê
 	lido, err := lerState()
 	if err != nil {
 		t.Fatalf("erro ao ler state: %v", err)
@@ -64,7 +62,6 @@ func TestLerStateInexistente(t *testing.T) {
 	}
 }
 
-// Restaura ao final de cada teste
 func init() {
 	os.Setenv("HUBSAUDE_TEST", "1")
 }
