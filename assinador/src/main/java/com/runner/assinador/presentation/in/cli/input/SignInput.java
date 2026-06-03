@@ -1,33 +1,38 @@
 package com.runner.assinador.presentation.in.cli.input;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.runner.assinador.domain.model.CryptographicStrategy;
 import com.runner.assinador.domain.model.TimestampStrategy;
 
 import java.util.List;
 
 public class SignInput {
 
-    @JsonProperty("bundle")
-    private BundleInput bundle;
+    private final BundleInput bundle;
+    private final ProvenanceInput provenance;
+    private final CryptographicInput cryptographicMaterial;
+    private final List<String> certificateChain;
+    private final Long referenceTimestamp;
+    private final TimestampStrategy timestampStrategy;
+    private final String policyUri;
 
-    @JsonProperty("provenance")
-    private ProvenanceInput provenance;
-
-    @JsonProperty("cryptographicMaterial")
-    private CryptographicInput cryptographicMaterial;
-
-    @JsonProperty("certificateChain")
-    private List<String> certificateChain;
-
-    @JsonProperty("referenceTimestamp")
-    private Long referenceTimestamp;
-
-    @JsonProperty("timestampStrategy")
-    private TimestampStrategy timestampStrategy;
-
-    @JsonProperty("policyUri")
-    private String policyUri;
+    @JsonCreator
+    public SignInput(
+            @JsonProperty("bundle") BundleInput bundle,
+            @JsonProperty("provenance") ProvenanceInput provenance,
+            @JsonProperty("cryptographicMaterial") CryptographicInput cryptographicMaterial,
+            @JsonProperty("certificateChain") List<String> certificateChain,
+            @JsonProperty("referenceTimestamp") Long referenceTimestamp,
+            @JsonProperty("timestampStrategy") TimestampStrategy timestampStrategy,
+            @JsonProperty("policyUri") String policyUri) {
+        this.bundle = bundle;
+        this.provenance = provenance;
+        this.cryptographicMaterial = cryptographicMaterial;
+        this.certificateChain = certificateChain;
+        this.referenceTimestamp = referenceTimestamp;
+        this.timestampStrategy = timestampStrategy;
+        this.policyUri = policyUri;
+    }
 
     public BundleInput getBundle() { return bundle; }
     public ProvenanceInput getProvenance() { return provenance; }
@@ -36,43 +41,4 @@ public class SignInput {
     public Long getReferenceTimestamp() { return referenceTimestamp; }
     public TimestampStrategy getTimestampStrategy() { return timestampStrategy; }
     public String getPolicyUri() { return policyUri; }
-
-    public static class BundleInput {
-        @JsonProperty("entry")
-        private List<ResourceEntryInput> entry;
-        public List<ResourceEntryInput> getEntry() { return entry; }
-    }
-
-    public static class ResourceEntryInput {
-        @JsonProperty("fullUrl")
-        private String fullUrl;
-        @JsonProperty("resourceJson")
-        private String resourceJson;
-        public String getFullUrl() { return fullUrl; }
-        public String getResourceJson() { return resourceJson; }
-    }
-
-    public static class ProvenanceInput {
-        @JsonProperty("target")
-        private List<String> target;
-        public List<String> getTarget() { return target; }
-    }
-
-    public static class CryptographicInput {
-        @JsonProperty("cryptographicStrategy")
-        private CryptographicStrategy cryptographicStrategy;
-        @JsonProperty("pin")
-        private String pin;
-        @JsonProperty("identifier")
-        private String identifier;
-        @JsonProperty("slotId")
-        private Integer slotId;
-        @JsonProperty("tokenLabel")
-        private String tokenLabel;
-        public CryptographicStrategy getCryptographicStrategy() { return cryptographicStrategy; }
-        public String getPin() { return pin; }
-        public String getIdentifier() { return identifier; }
-        public Integer getSlotId() { return slotId; }
-        public String getTokenLabel() { return tokenLabel; }
-    }
 }
