@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 )
 
+var hubsaudeDirOverride string
+
 type SimuladorState struct {
 	PID     int    `json:"pid"`
 	Port    int    `json:"port"`
@@ -13,6 +15,9 @@ type SimuladorState struct {
 }
 
 func hubsaudeDir() string {
+	if hubsaudeDirOverride != "" {
+		return hubsaudeDirOverride
+	}
 	home, _ := os.UserHomeDir()
 	return filepath.Join(home, ".hubsaude")
 }
