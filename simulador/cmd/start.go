@@ -27,7 +27,7 @@ Antes de iniciar, verifica se:
 Exemplo:
   simulador start`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Verifica se já está em execução
+	
 		state, err := lerState()
 		if err == nil && state.PID > 0 {
 			if instanciaViva(state.Port) {
@@ -39,7 +39,6 @@ Exemplo:
 			_ = limparState()
 		}
 
-		// Verifica disponibilidade da porta
 		fmt.Printf("Verificando porta %d...\n", portaPadrao)
 		if !portaDisponivel(portaPadrao) {
 			fmt.Fprintf(os.Stderr, "Erro: porta %d já está em uso por outro processo\n", portaPadrao)
@@ -48,7 +47,6 @@ Exemplo:
 		}
 		fmt.Printf("Porta %d disponível.\n", portaPadrao)
 
-		// Provisiona jar e JRE
 		fmt.Println("Verificando dependências...")
 		info, err := buscarReleaseInfo()
 		if err != nil {
@@ -66,7 +64,6 @@ Exemplo:
 			os.Exit(1)
 		}
 
-		// Inicia o processo
 		fmt.Println("Iniciando simulador...")
 		processo := exec.Command("java", "-jar", jarLocalPath())
 		processo.Stdout = os.Stdout
@@ -77,7 +74,6 @@ Exemplo:
 			os.Exit(1)
 		}
 
-		// Salva estado
 		novoState := &SimuladorState{
 			PID:     processo.Process.Pid,
 			Port:    portaPadrao,

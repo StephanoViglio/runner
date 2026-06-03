@@ -23,7 +23,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Repositório criado e estrutura de pastas definida | ✅ Concluído |
 | Branches configuradas e `main` protegida | ✅ Concluído |
 | Convenção de commits definida (Conventional Commits) | ✅ Concluído |
-| `.gitignore` configurado para Go e Java | ✅ Concluído |
+| `.gitignore` e e `.gitattributes` configurado para Go e Java | ✅ Concluído |
 | Frameworks definidos (`cobra` para Go, Spring Boot para Java) | ✅ Concluído |
 
 ### Iteração 1 — Esqueleto Funcional 🔄 Em andamento
@@ -51,6 +51,8 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Validação sintática de parâmetros no CLI | ⏳ Não iniciado |
 | `--help` detalhado com exemplos por subcomando | ✅ Concluído |
 | Padronização de saída e exit codes | ✅ Concluído |
+| Testes automatizados em Go (`assinatura`) | ✅ Concluído |
+| Flag `--version` no CLI `assinatura` | ✅ Concluído |
 | Aprofundamento de testes unitários e de integração | ⏳ Não iniciado |
 | Integração com SonarQube | 🔄 Em andamento |
 
@@ -73,6 +75,11 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Comparação de versão local vs remota via `release.json` | ✅ Concluído |
 | Download do JRE via Eclipse Temurin | ✅ Concluído |
 | Persistência de PID e porta em `~/.hubsaude` | ✅ Concluído |
+| Health check real via `/api/info` no `start` | ✅ Concluído |
+| Timeout nas chamadas HTTP do `simulador` | ✅ Concluído |
+| Testes automatizados em Go (`simulador`) | ✅ Concluído |
+| Flag `--version` no CLI `simulador` | ✅ Concluído |
+| Detecção de porta ocupada para IPv4 e IPv6 | ✅ Concluído |
 | Detecção e download automático do JDK em `~/.hubsaude/jdk` | ⏳ Não iniciado |
 | Provisionamento de JDK para Windows, Linux e macOS | ⏳ Não iniciado |
 | Pacote Go compartilhado para provisionamento | ⏳ Não iniciado |
