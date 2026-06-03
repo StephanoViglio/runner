@@ -1,0 +1,22 @@
+# Normaliza line endings para LF em todos os arquivos de texto
+* text=auto eol=lf
+
+# Força LF explicitamente para código-fonte
+*.go text eol=lf
+*.java text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+
+# Binários — não normalizar
+*.jar binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.png binary
+*.jpg binary
