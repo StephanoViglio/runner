@@ -30,14 +30,14 @@ Exemplo:
 		// Verifica se já está em execução
 		state, err := lerState()
 		if err == nil && state.PID > 0 {
-    	if instanciaViva(state.Port) {
-        fmt.Printf("Simulador já está em execução e respondendo (PID %d, porta %d)\n",
-            state.PID, state.Port)
-        os.Exit(0)
-    }
-    fmt.Println("Aviso: estado anterior encontrado mas simulador não responde. Reiniciando...")
-    _ = limparState()
-}
+			if instanciaViva(state.Port) {
+				fmt.Printf("Simulador já está em execução e respondendo (PID %d, porta %d)\n",
+					state.PID, state.Port)
+				os.Exit(0)
+			}
+			fmt.Println("Aviso: estado anterior encontrado mas simulador não responde. Reiniciando...")
+			_ = limparState()
+		}
 
 		// Verifica disponibilidade da porta
 		fmt.Printf("Verificando porta %d...\n", portaPadrao)
@@ -92,22 +92,29 @@ Exemplo:
 }
 
 func instanciaViva(porta int) bool {
-    client := &http.Client{Timeout: startupTimeout}
-    url := fmt.Sprintf("http://localhost:%d/api/info", porta)
-    resp, err := client.Get(url)
-    if err != nil {
-        return false
-    }
-    defer resp.Body.Close()
-    return resp.StatusCode == http.StatusOK
-}
-
-func portaDisponivel(porta int) bool {
-	ln, err := net.Listen("tcp", fmt.Sprintf(":%d", porta))
+	client := &http.Client{Timeout: startupTimeout}
+	url := fmt.Sprintf("http://localhost:%d/api/info", porta)
+	resp, err := client.Get(url)
 	if err != nil {
 		return false
 	}
-	ln.Close()
+	defer resp.Body.Close()
+	return resp.StatusCode == http.StatusOK
+}
+
+func portaDisponivel(porta int) bool {
+	ln4, err := net.Listen("tcp4", fmt.Sprintf(":%d", porta))
+	if err != nil {
+		return false
+	}
+	ln4.Close()
+
+	ln6, err := net.Listen("tcp6", fmt.Sprintf(":%d", porta))
+	if err != nil {
+		return false
+	}
+	ln6.Close()
+
 	return true
 }
 
