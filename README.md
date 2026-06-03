@@ -39,7 +39,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | `FakeSignatureService` com respostas pré-construídas | Omar | ✅ Concluído |
 | Modo CLI no `assinador.jar` | Omar | ✅ Concluído |
 | Modo servidor HTTP (`/sign` e `/validate`) | Omar | ✅ Concluído |
-| Testes unitários iniciais do `assinador.jar` | Omar | 🔄 Em andamento |
+| Testes unitários iniciais do `assinador.jar` | Omar | ✅ Concluído |
 
 ### Iteração 2 — Validação de Parâmetros e Tratamento de Erros 🔄 Em andamento
 
@@ -53,8 +53,8 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Padronização de saída e exit codes | ✅ Concluído |
 | Testes automatizados em Go (`assinatura`) | ✅ Concluído |
 | Flag `--version` no CLI `assinatura` | ✅ Concluído |
-| Aprofundamento de testes unitários e de integração | ⏳ Não iniciado |
-| Integração com SonarQube | 🔄 Em andamento |
+| Aprofundamento de testes unitários e de integração | 🔄 Em andamento |
+| Integração com SonarQube | ✅ Concluído |
 
 ### Iteração 3 — CI/CD e Binários ⏳ Não iniciada
 
