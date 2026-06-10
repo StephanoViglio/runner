@@ -59,7 +59,7 @@ Exemplo:
 			os.Exit(1)
 		}
 
-		if err := garantirJRE(info); err != nil {
+		if err := garantirJRE(); err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
