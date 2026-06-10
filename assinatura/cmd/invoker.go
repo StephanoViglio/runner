@@ -8,7 +8,10 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"time"
+
+	"github.com/StephanoViglio/runner/shared/jdk"
 )
 
 const defaultServerURL = "http://localhost:8080"
@@ -16,6 +19,15 @@ const defaultJarPath = "../assinador/target/assinador.jar"
 const httpTimeout = 10 * time.Second
 
 var httpClient = &http.Client{Timeout: httpTimeout}
+
+func hubsaudeDir() string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Erro ao obter diretório home: %v\n", err)
+		os.Exit(ExitErroInesperado)
+	}
+	return filepath.Join(home, ".hubsaude")
+}
 
 func invocarHTTP(endpoint string, conteudo []byte) {
 	url := defaultServerURL + endpoint
@@ -42,7 +54,8 @@ func invocarHTTP(endpoint string, conteudo []byte) {
 }
 
 func invocarCLI(subcomando string, arquivoJSON string, jarPath string) {
-	cmd := exec.Command("java", "-jar", jarPath, subcomando, "--input", arquivoJSON)
+	java := jdk.CaminhoJava(hubsaudeDir())
+	cmd := exec.Command(java, "-jar", jarPath, subcomando, "--input", arquivoJSON)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
