@@ -65,7 +65,7 @@ Exemplo:
 		}
 
 		fmt.Println("Iniciando simulador...")
-		processo := exec.Command("java", "-jar", jarLocalPath())
+		processo := exec.Command(caminhoJava(), "-jar", jarLocalPath())
 		processo.Stdout = os.Stdout
 		processo.Stderr = os.Stderr
 
