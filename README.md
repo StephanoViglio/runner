@@ -23,10 +23,10 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Repositório criado e estrutura de pastas definida | ✅ Concluído |
 | Branches configuradas e `main` protegida | ✅ Concluído |
 | Convenção de commits definida (Conventional Commits) | ✅ Concluído |
-| `.gitignore` e e `.gitattributes` configurado para Go e Java | ✅ Concluído |
+| `.gitignore` e `.gitattributes` configurado para Go e Java | ✅ Concluído |
 | Frameworks definidos (`cobra` para Go, Spring Boot para Java) | ✅ Concluído |
 
-### Iteração 1 — Esqueleto Funcional 🔄 Em andamento
+### Iteração 1 — Esqueleto Funcional ✅ Concluída
 
 | Tarefa | Responsável | Status |
 |--------|-------------|--------|
@@ -35,13 +35,13 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Validação de parâmetros obrigatórios no CLI | Stephano | ✅ Concluído |
 | Invocação do `assinador.jar` via CLI ou HTTP | Stephano | ✅ Concluído |
 | Projeto Maven do `assinador.jar` criado | Omar | ✅ Concluído |
-| Interface `SignatureService` definida | Omar | ✅ Concluído |
-| `FakeSignatureService` com respostas pré-construídas | Omar | ✅ Concluído |
+| Interface `SignatureProvider` definida | Omar | ✅ Concluído |
+| `FakeSignatureProvider` com respostas pré-construídas | Omar | ✅ Concluído |
 | Modo CLI no `assinador.jar` | Omar | ✅ Concluído |
 | Modo servidor HTTP (`/sign` e `/validate`) | Omar | ✅ Concluído |
 | Testes unitários iniciais do `assinador.jar` | Omar | ✅ Concluído |
 
-### Iteração 2 — Validação de Parâmetros e Tratamento de Erros 🔄 Em andamento
+### Iteração 2 — Validação de Parâmetros, Tratamento de Erros e Arquitetura 🔄 Em andamento
 
 | Tarefa | Status |
 |--------|--------|
@@ -55,6 +55,13 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Flag `--version` no CLI `assinatura` | ✅ Concluído |
 | Aprofundamento de testes unitários e de integração | 🔄 Em andamento |
 | Integração com SonarQube | ✅ Concluído |
+| Refatoração para Arquitetura Hexagonal + Onion Architecture | ✅ Concluído |
+| Separação em camadas `domain`, `application`, `presentation`, `infrastructure` | ✅ Concluído |
+| Commands movidos para `domain.port.in` (contrato das portas) | ✅ Concluído |
+| `CryptographicMaterial` extraído como value object do domínio | ✅ Concluído |
+| `SignatureRequest` e `VerificationRequest` como tipos da `port.out` | ✅ Concluído |
+| Lógica de JWS movida do service para o `FakeSignatureProvider` | ✅ Concluído |
+| Inputs CLI extraídos para classes top-level | ✅ Concluído |
 
 ### Iteração 3 — CI/CD e Binários ⏳ Não iniciada
 
@@ -65,7 +72,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Publicação no GitHub Releases com checksums SHA256 | ⏳ Não iniciado |
 | Versionamento semântico (SemVer) | ⏳ Não iniciado |
 
-### Iteração 4 — Simulador CLI e Provisionamento de JDK 🔄 Em andamento
+### Iteração 4 — Simulador CLI, Provisionamento de JDK e Assinatura Real 🔄 Em andamento
 
 | Tarefa | Status |
 |--------|--------|
@@ -80,9 +87,14 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Testes automatizados em Go (`simulador`) | ✅ Concluído |
 | Flag `--version` no CLI `simulador` | ✅ Concluído |
 | Detecção de porta ocupada para IPv4 e IPv6 | ✅ Concluído |
-| Detecção e download automático do JDK em `~/.hubsaude/jdk` | ⏳ Não iniciado |
-| Provisionamento de JDK para Windows, Linux e macOS | ⏳ Não iniciado |
-| Pacote Go compartilhado para provisionamento | ⏳ Não iniciado |
+| Detecção e download automático do JDK em `~/.hubsaude/jdk` | ✅ Concluído |
+| Provisionamento de JDK para Windows, Linux e macOS | ✅ Concluído |
+| Extração do JRE após download | ✅ Concluído | 
+| Pacote Go compartilhado para provisionamento | ✅ Concluído |
+| Implementação do `SignatureProvider` real via PKCS#11 (`SunPKCS11` provider) | ⏳ Não iniciado |
+| Testes de integração com SoftHSM2 como simulador de dispositivo criptográfico | ⏳ Não iniciado |
+| Tratamento adequado quando dispositivo não está disponível | ⏳ Não iniciado |
+| Documentação do setup para uso com dispositivo criptográfico real | ⏳ Não iniciado |
 
 ### Iteração 5 — Documentação e Qualidade ⏳ Não iniciada
 
@@ -150,6 +162,7 @@ assinatura/
 | Java | Linguagem principal |
 | Spring Boot | Modo servidor HTTP (`/sign` e `/validate`) |
 | picocli | Modo CLI |
+| SunPKCS11 + SoftHSM2 | Assinatura real via PKCS#11 (smartcard e token) |
 | JUnit + Mockito | Testes unitários |
 | Spring Boot Test | Testes de integração HTTP |
 | SonarQube | Cobertura de testes e análise de code smells |
@@ -174,4 +187,4 @@ A ser configurado na Iteração 3 via GitHub Actions, cobrindo:
 
 ## Documentação
 
-A ser desenvolvida na Iteração 5. Incluirá diagramas C4 (Contexto e Contêineres), manual de uso e documentação técnica da integração.
+A ser desenvolvida na Iteração 5. Incluirá manual de uso e documentação técnica da integração.
