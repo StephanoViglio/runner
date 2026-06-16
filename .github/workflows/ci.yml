@@ -1,7 +1,5 @@
 name: CI
 
-# Roda em pushes para main e em PRs direcionados à main.
-# Configure como required status check nas branch-protection rules.
 on:
   push:
     branches: [main]
@@ -13,9 +11,6 @@ permissions:
 
 jobs:
 
-  # ──────────────────────────────────────────────────────────
-  # Detecta quais aplicações foram modificadas
-  # ──────────────────────────────────────────────────────────
   changes:
     name: Detectar alterações
     runs-on: ubuntu-latest
@@ -39,10 +34,6 @@ jobs:
             simulador:
               - 'simulador/**'
               - '.github/workflows/ci.yml'
-
-  # ════════════════════════════════════════════════════════
-  #  ASSINATURA  (Go CLI)
-  # ════════════════════════════════════════════════════════
 
   test-assinatura:
     name: "[assinatura] Test / ${{ matrix.os }}"
@@ -132,10 +123,6 @@ jobs:
           path: dist/
           retention-days: 7
 
-  # ════════════════════════════════════════════════════════
-  #  ASSINADOR  (Java / Maven)
-  # ════════════════════════════════════════════════════════
-
   test-assinador:
     name: "[assinador] Test / ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -191,10 +178,6 @@ jobs:
           name: assinador-jar
           path: dist/
           retention-days: 7
-
-  # ════════════════════════════════════════════════════════
-  #  SIMULADOR  (Go CLI)
-  # ════════════════════════════════════════════════════════
 
   test-simulador:
     name: "[simulador] Test / ${{ matrix.os }}"
