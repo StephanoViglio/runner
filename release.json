@@ -1,5 +1,4 @@
 {
-  "_comentario": "Atualizar url e version do jar quando o CI/CD estiver configurado na Iteração 4",
   "jar": {
     "url": "https://github.com/StephanoViglio/runner/releases/latest/download/simulador.jar",
     "version": "0.0.0"
