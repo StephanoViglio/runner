@@ -269,6 +269,25 @@ jobs:
           path: dist/
           retention-days: 7
 
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    needs: [test-assinatura, test-assinador, test-simulador]
+    if: always()
+    steps:
+      - name: Verificar resultado dos testes
+        run: |
+          for result in \
+            "${{ needs.test-assinatura.result }}" \
+            "${{ needs.test-assinador.result }}" \
+            "${{ needs.test-simulador.result }}"; do
+            if [[ "$result" == "failure" || "$result" == "cancelled" ]]; then
+              echo "Um job de teste falhou: $result"
+              exit 1
+            fi
+          done
+          echo "Todos os testes passaram ou foram skipped (sem alterações no módulo)"
+
   # ════════════════════════════════════════════════════════
   #  SONARCLOUD  (análise unificada dos 3 módulos)
   # ════════════════════════════════════════════════════════
