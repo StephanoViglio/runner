@@ -8,7 +8,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "assinatura",
-	Version: "1.0.0",
+	Version: "1.1.0",
 	Short: "CLI do Sistema Runner para operações de assinatura digital",
 	Long: `assinatura é a interface de linha de comandos do Sistema Runner.
 
