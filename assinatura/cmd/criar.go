@@ -43,10 +43,12 @@ Exemplos:
 		local, _ := cmd.Flags().GetBool("local")
 		source, _ := cmd.Flags().GetString("source")
 
+		conteudo := lerArquivoJSON(arquivo)
+		validarSintaxeCriar(conteudo)
+
 		if local {
 			invocarCLI("sign", arquivo, source)
 		} else {
-			conteudo := lerArquivoJSON(arquivo)
 			invocarHTTP("/sign", conteudo)
 		}
 	},

@@ -43,10 +43,12 @@ Exemplos:
 		local, _ := cmd.Flags().GetBool("local")
 		source, _ := cmd.Flags().GetString("source")
 
+		conteudo := lerArquivoJSON(arquivo)
+		validarSintaxeValidar(conteudo)
+
 		if local {
 			invocarCLI("validate", arquivo, source)
 		} else {
-			conteudo := lerArquivoJSON(arquivo)
 			invocarHTTP("/validate", conteudo)
 		}
 	},

@@ -48,7 +48,7 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Mapeamento dos parâmetros das especificações FHIR | ✅ Concluído |
 | Validação completa de parâmetros no `assinador.jar` | ✅ Concluído |
 | Mensagens de erro estruturadas | ✅ Concluído |
-| Validação sintática de parâmetros no CLI | ⏳ Não iniciado |
+| Validação sintática de parâmetros no CLI | ✅ Concluído |
 | `--help` detalhado com exemplos por subcomando | ✅ Concluído |
 | Padronização de saída e exit codes | ✅ Concluído |
 | Testes automatizados em Go (`assinatura`) | ✅ Concluído |
@@ -63,14 +63,14 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Lógica de JWS movida do service para o `FakeSignatureProvider` | ✅ Concluído |
 | Inputs CLI extraídos para classes top-level | ✅ Concluído |
 
-### Iteração 3 — CI/CD e Binários ⏳ Não iniciada
+### Iteração 3 — CI/CD e Binários 🔄 Em andamento
 
 | Tarefa | Status |
 |--------|--------|
-| Pipeline de CI com GitHub Actions | ⏳ Não iniciado |
-| Pipeline de CD com geração de binários multiplataforma | ⏳ Não iniciado |
-| Publicação no GitHub Releases com checksums SHA256 | ⏳ Não iniciado |
-| Versionamento semântico (SemVer) | ⏳ Não iniciado |
+| Pipeline de CI com GitHub Actions | 🔄 Em andamento |
+| Pipeline de CD com geração de binários multiplataforma | 🔄 Em andamento |
+| Publicação no GitHub Releases com checksums SHA256 | ✅ Concluído |
+| Versionamento semântico (SemVer) | ✅ Concluído |
 
 ### Iteração 4 — Simulador CLI, Provisionamento de JDK e Assinatura Real 🔄 Em andamento
 
@@ -112,11 +112,11 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 
 | Entregável | Critério de Conclusão | Status |
 |---|---|---|
-| Repositório configurado + CI/CD base | Pipeline rodando sem erros | ⏳ Não iniciado |
+| Repositório configurado + CI/CD base | Pipeline rodando sem erros | 🔄 Em andamento |
 | `assinador.jar` funcional | Todos os critérios de US-02 cobertos | 🔄 Em andamento |
 | CLI `assinatura` funcional | Todos os critérios de US-01 cobertos | 🔄 Em andamento |
 | CLI `simulador` funcional | Todos os critérios de US-03 cobertos | 🔄 Em andamento |
-| Provisionamento de JDK | Todos os critérios de US-04 cobertos | ⏳ Não iniciado |
+| Provisionamento de JDK | Todos os critérios de US-04 cobertos | 🔄 Em andamento |
 | Suite de testes completa | Cobertura ≥ 70%, todos os critérios de aceitação passando | ⏳ Não iniciado |
 | Binários publicados | Release no GitHub com checksums SHA256 | ⏳ Não iniciado |
 | Documentação completa | Manual, docs técnicas e README publicados | ⏳ Não iniciado |
