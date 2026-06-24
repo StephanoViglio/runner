@@ -1,4 +1,4 @@
-package com.runner.assinador.presentation.in.rest;
+package com.runner.assinador.unit.presentation.in.rest;
 
 import com.runner.assinador.domain.model.SignatureResult;
 import com.runner.assinador.domain.model.VerificationResult;
@@ -6,6 +6,7 @@ import com.runner.assinador.domain.port.in.SignDocumentCommand;
 import com.runner.assinador.domain.port.in.SignDocumentUseCase;
 import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import com.runner.assinador.domain.port.in.VerifySignatureUseCase;
+import com.runner.assinador.presentation.in.rest.SignatureController;
 import com.runner.assinador.presentation.in.rest.dto.request.SignRequestDTO;
 import com.runner.assinador.presentation.in.rest.dto.request.VerifyRequestDTO;
 import com.runner.assinador.presentation.in.rest.dto.response.SignResponseDTO;

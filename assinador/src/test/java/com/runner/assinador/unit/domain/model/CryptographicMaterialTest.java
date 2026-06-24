@@ -1,5 +1,7 @@
-package com.runner.assinador.domain.model;
+package com.runner.assinador.unit.domain.model;
 
+import com.runner.assinador.domain.model.CryptographicMaterial;
+import com.runner.assinador.domain.model.CryptographicStrategy;
 import com.runner.assinador.utils.EntityUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

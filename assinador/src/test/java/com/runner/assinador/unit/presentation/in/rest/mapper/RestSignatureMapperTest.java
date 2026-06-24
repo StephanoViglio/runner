@@ -1,4 +1,4 @@
-package com.runner.assinador.presentation.in.rest.mapper;
+package com.runner.assinador.unit.presentation.in.rest.mapper;
 
 import com.runner.assinador.domain.model.SignatureResult;
 import com.runner.assinador.domain.port.in.SignDocumentCommand;
@@ -6,6 +6,7 @@ import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import com.runner.assinador.presentation.in.rest.dto.request.SignRequestDTO;
 import com.runner.assinador.presentation.in.rest.dto.request.VerifyRequestDTO;
 import com.runner.assinador.presentation.in.rest.dto.response.SignResponseDTO;
+import com.runner.assinador.presentation.in.rest.mapper.RestSignatureMapper;
 import com.runner.assinador.presentation.shared.outcome.OperationOutcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

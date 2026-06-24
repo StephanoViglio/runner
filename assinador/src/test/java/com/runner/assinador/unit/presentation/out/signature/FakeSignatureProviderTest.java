@@ -1,4 +1,4 @@
-package com.runner.assinador.presentation.out.signature;
+package com.runner.assinador.unit.presentation.out.signature;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.runner.assinador.domain.exception.DomainErrorCode;
@@ -7,6 +7,7 @@ import com.runner.assinador.domain.model.SignatureRequest;
 import com.runner.assinador.domain.model.SignatureResult;
 import com.runner.assinador.domain.model.VerificationRequest;
 import com.runner.assinador.domain.model.VerificationResult;
+import com.runner.assinador.presentation.out.signature.FakeSignatureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

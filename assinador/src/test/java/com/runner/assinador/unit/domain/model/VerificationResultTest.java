@@ -1,5 +1,6 @@
-package com.runner.assinador.domain.model;
+package com.runner.assinador.unit.domain.model;
 
+import com.runner.assinador.domain.model.VerificationResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

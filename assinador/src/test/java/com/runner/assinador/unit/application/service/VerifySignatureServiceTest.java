@@ -1,5 +1,6 @@
-package com.runner.assinador.application.service;
+package com.runner.assinador.unit.application.service;
 
+import com.runner.assinador.application.service.VerifySignatureService;
 import com.runner.assinador.domain.exception.DomainErrorCode;
 import com.runner.assinador.domain.exception.SignatureException;
 import com.runner.assinador.domain.model.VerificationRequest;

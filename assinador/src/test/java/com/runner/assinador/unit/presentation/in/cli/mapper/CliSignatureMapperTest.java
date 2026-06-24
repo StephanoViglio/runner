@@ -1,8 +1,9 @@
-package com.runner.assinador.presentation.in.cli.mapper;
+package com.runner.assinador.unit.presentation.in.cli.mapper;
 
 import com.runner.assinador.domain.port.in.SignDocumentCommand;
 import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import com.runner.assinador.presentation.in.cli.input.SignInput;
+import com.runner.assinador.presentation.in.cli.mapper.CliSignatureMapper;
 import com.runner.assinador.presentation.in.cli.input.VerifyInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

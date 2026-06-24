@@ -1,5 +1,6 @@
-package com.runner.assinador.domain.port.in;
+package com.runner.assinador.unit.domain.port.in;
 
+import com.runner.assinador.domain.port.in.VerifySignatureCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
