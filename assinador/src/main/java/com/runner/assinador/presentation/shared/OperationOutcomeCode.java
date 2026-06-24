@@ -83,6 +83,36 @@ public enum OperationOutcomeCode {
             IssueSeverity.ERROR,
             IssueType.EXCEPTION),
 
+    CRYPTO_DEVICE_UNAVAILABLE(
+            "CRYPTO.DEVICE-UNAVAILABLE",
+            "Dispositivo Criptográfico Indisponível",
+            IssueSeverity.FATAL,
+            IssueType.EXCEPTION),
+
+    CRYPTO_LOGIN_FAILED(
+            "CRYPTO.LOGIN-FAILED",
+            "Falha de Autenticação no Dispositivo Criptográfico",
+            IssueSeverity.ERROR,
+            IssueType.SECURITY),
+
+    CRYPTO_KEY_NOT_FOUND(
+            "CRYPTO.KEY-NOT-FOUND",
+            "Chave Criptográfica Não Encontrada no Dispositivo",
+            IssueSeverity.ERROR,
+            IssueType.NOT_FOUND),
+
+    CRYPTO_SIGNING_FAILURE(
+            "CRYPTO.SIGNING-FAILURE",
+            "Falha ao Realizar Operação de Assinatura no Dispositivo",
+            IssueSeverity.FATAL,
+            IssueType.EXCEPTION),
+
+    CRYPTO_SIGNATURE_INVALID(
+            "CRYPTO.SIGNATURE-INVALID",
+            "Assinatura Criptográfica Inválida",
+            IssueSeverity.ERROR,
+            IssueType.SECURITY),
+
     INTERNAL_SERVER_ERROR(
             "INTERNAL.SERVER-ERROR",
             "Erro Interno do Servidor",
