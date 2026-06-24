@@ -1,3 +1,12 @@
 spring:
   application:
     name: assinador
+
+assinador:
+  signature-provider:
+    # fake: simulação em memória (padrão). pkcs11: assinatura real via SunPKCS11.
+    type: ${ASSINADOR_SIGNATURE_PROVIDER:fake}
+  pkcs11:
+    # Caminho para o arquivo de configuração do provedor SunPKCS11 (formato "name=...\nlibrary=...").
+    # Só é lido quando assinador.signature-provider.type=pkcs11. Veja docs/pkcs11-softhsm2-setup.md.
+    config-path: ${PKCS11_CONFIG_PATH:}
