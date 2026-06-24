@@ -160,22 +160,28 @@ com.runner.assinador/
 │   │
 │   ├── out/
 │   │   └── signature/                   # Saída para a operação de assinatura
-│   │       └── FakeSignatureProvider.java # implementa SignatureProvider
+│   │       ├── FakeSignatureProvider.java  # implementa SignatureProvider (simulação)
+│   │       └── Pkcs11SignatureProvider.java # implementa SignatureProvider (real, via PKCS#11)
 │   │
 │   └── shared/                          # Código compartilhado entre componentes
 │       ├── IssueSeverity.java
 │       ├── IssueType.java
 │       ├── OperationOutcomeCode.java
-│       └── fhir/                        # Modelos FHIR de OperationOutcome
-│           ├── OperationOutcome.java
-│           ├── Issue.java
-│           ├── CodeableConcept.java
-│           ├── Coding.java
-│           └── OperationOutcomeFactory.java
+│       ├── fhir/                        # Modelos FHIR de OperationOutcome
+│       │   ├── OperationOutcome.java
+│       │   ├── Issue.java
+│       │   ├── CodeableConcept.java
+│       │   ├── Coding.java
+│       │   └── OperationOutcomeFactory.java
+│       └── signature/                   # Parsing/validação de envelope JWS, comum aos providers
+│           ├── JwsEnvelope.java
+│           ├── JwsEnvelopeParser.java
+│           └── SignedContentDigest.java
 │
 └── infrastructure/                      # Configuração e bootstrap
     ├── configuration/
-    │   └── JacksonConfig.java
+    │   ├── JacksonConfig.java
+    │   └── Pkcs11Config.java            # registra o Provider SunPKCS11 (quando habilitado)
     ├── AssinadorApplication.java        # entrypoint Spring Boot
     └── AssinadorCli.java                # entrypoint da CLI
 ```
@@ -234,10 +240,12 @@ Divide-se em três sub-pacotes:
 **`presentation.out`** — componentes de saída, que implementam portas de `domain.port.out`:
 
 - `presentation.out.signature.FakeSignatureProvider` — implementa `SignatureProvider`. Constrói o JWS simulado no `sign()`, e no `verify()` parseia o JWS, valida sua estrutura (`alg`, `x5c`, `sigPId`) e recomputa o hash de integridade quando aplicável.
+- `presentation.out.signature.Pkcs11SignatureProvider` — implementa `SignatureProvider` com assinatura criptográfica real via PKCS#11. Abre sessão no dispositivo (PIN + identificador vindos do `CryptographicMaterial` da requisição), assina o signing input do JWS (RFC 7515) com a chave do dispositivo e, no `verify()`, valida a assinatura criptograficamente contra o certificado em `x5c` (sem precisar do dispositivo, já que verificação usa apenas a chave pública). Ver [ADR-0001](adr/0001-localizacao-pkcs11-signature-provider.md) para a decisão de mantê-lo aqui e não em `infrastructure`.
 
 **`presentation.shared`** — código compartilhado entre componentes de presentation que não pertence ao domínio:
 
 - `presentation.shared.fhir` — modelos FHIR do `OperationOutcome` (`OperationOutcome`, `Issue`, `Coding`, `CodeableConcept`) e `OperationOutcomeFactory`, usados por REST e CLI para reportar erros num formato padronizado.
+- `presentation.shared.signature` — `JwsEnvelopeParser`/`JwsEnvelope` (decodificação e validação estrutural do envelope JWS) e `SignedContentDigest` (resumo SHA-256 do conteúdo referenciado por `provenance.target`). Extraído para evitar duplicar essa lógica entre `FakeSignatureProvider` e `Pkcs11SignatureProvider` — ambos implementam a mesma porta `presentation.out`, mas não se conhecem entre si.
 - `presentation.shared` — enums do catálogo de issues (`IssueSeverity`, `IssueType`, `OperationOutcomeCode`).
 
 **Restrições:**
@@ -252,7 +260,7 @@ Concentra a configuração de frameworks e o bootstrap da aplicação. Existe em
 
 **Conteúdo:**
 
-- **`infrastructure.configuration`** — classes `@Configuration` que registram beans do Spring. Hoje contém apenas `JacksonConfig`, que provê o `ObjectMapper` consumido pelo `FakeSignatureProvider`.
+- **`infrastructure.configuration`** — classes `@Configuration` que registram beans do Spring: `JacksonConfig` provê o `ObjectMapper` consumido pelos providers de assinatura; `Pkcs11Config` registra o `Provider` SunPKCS11 da JVM (somente quando `assinador.signature-provider.type=pkcs11`), consumido por `Pkcs11SignatureProvider`.
 - **Entrypoints** — `AssinadorApplication` (`@SpringBootApplication` com `main()` que sobe o servidor HTTP) e `AssinadorCli` (entrypoint que monta picocli sobre o contexto Spring para execução via terminal).
 
 **Restrições:**
@@ -284,9 +292,9 @@ São **interfaces que o núcleo declara para si mesmo**: "para realizar meu trab
 
 | Porta | Métodos | Implementada por |
 |---|---|---|
-| `SignatureProvider` | `sign(SignatureRequest)`, `verify(VerificationRequest)` | `FakeSignatureProvider` |
+| `SignatureProvider` | `sign(SignatureRequest)`, `verify(VerificationRequest)` | `FakeSignatureProvider` (simulação, padrão) ou `Pkcs11SignatureProvider` (real, via PKCS#11) |
 
-A inversão é o ponto-chave: o núcleo **define a porta** mas **não conhece a implementação**. Substituir o `FakeSignatureProvider` por uma implementação real (PKCS#11, BouncyCastle, AWS KMS) não exige nenhuma mudança no núcleo — só plugar outra implementação no contêiner de DI.
+A inversão é o ponto-chave: o núcleo **define a porta** mas **não conhece a implementação**. As duas implementações coexistem no código; qual delas fica ativa em runtime é decidido por uma única property, `assinador.signature-provider.type` (`fake` por padrão, `pkcs11` quando configurado — ver `Pkcs11Config`), usando `@ConditionalOnProperty` para que exatamente um bean de `SignatureProvider` exista no contexto Spring a cada execução. Nenhuma mudança no núcleo foi necessária para isso.
 
 ## Regra de Dependência
 

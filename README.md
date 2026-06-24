@@ -91,10 +91,10 @@ O projeto está em desenvolvimento iterativo. A tabela abaixo reflete o estado a
 | Provisionamento de JDK para Windows, Linux e macOS | ✅ Concluído |
 | Extração do JRE após download | ✅ Concluído | 
 | Pacote Go compartilhado para provisionamento | ✅ Concluído |
-| Implementação do `SignatureProvider` real via PKCS#11 (`SunPKCS11` provider) | ⏳ Não iniciado |
-| Testes de integração com SoftHSM2 como simulador de dispositivo criptográfico | ⏳ Não iniciado |
-| Tratamento adequado quando dispositivo não está disponível | ⏳ Não iniciado |
-| Documentação do setup para uso com dispositivo criptográfico real | ⏳ Não iniciado |
+| Implementação do `SignatureProvider` real via PKCS#11 (`SunPKCS11` provider) | 🔄 Em andamento |
+| Testes de integração com SoftHSM2 como simulador de dispositivo criptográfico | 🔄 Em andamento |
+| Tratamento adequado quando dispositivo não está disponível | ✅ Concluído |
+| Documentação do setup para uso com dispositivo criptográfico real | ✅ Concluído |
 
 ### Iteração 5 — Documentação e Qualidade ⏳ Não iniciada
 
